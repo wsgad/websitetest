@@ -512,7 +512,7 @@ body.index-page .footer .social-links {
   }
 
   .mobile-nav-active {
-    overflow: visible; /* allow overlay centering without clipping */
+    overflow: hidden;
   }
 
   .mobile-nav-active .mobile-nav-toggle {
@@ -525,58 +525,67 @@ body.index-page .footer .social-links {
     z-index: 9999;
   }
 
-  /* Centered glass-morphism mobile menu overlay */
+  /* Centered glass-morphism mobile menu overlay
+     - Keep the existing toggle logic and z-index ordering
+     - Mobile toggle button has z-index: 9999 so it stays above this overlay and remains clickable */
   .mobile-nav-active .navmenu {
     position: fixed;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(8, 10, 12, 0.35); /* subtle dark tint behind panel */
-    -webkit-backdrop-filter: none; /* ensure container doesn't capture blur */
-    backdrop-filter: none;
-    z-index: 9998; /* above header (997) but below toggle (9999) */
-    transition: background-color 0.25s ease;
-    pointer-events: auto;
+    background: rgba(6, 8, 10, 0.45); /* subtle dim */
+    -webkit-backdrop-filter: none; /* ensure pseudo fallback doesn't apply here */
+    transition: background 0.25s ease;
+    z-index: 9997; /* keep below the toggle (9999) */
+    overflow: hidden; /* container doesn't scroll; inner box can */
+    touch-action: manipulation;
   }
 
+  /* The centered glass panel */
   .mobile-nav-active .navmenu>ul {
     display: block;
-    position: relative; /* centered panel */
-    width: min(420px, 92%);
-    max-width: 92%;
-    max-height: min(80vh, calc(100vh - 64px));
-    overflow: auto; /* only scroll inside panel if needed */
-    padding: 28px 24px;
-    box-sizing: border-box;
-    border-radius: 14px;
-    background-color: rgba(12, 16, 20, 0.45);
+    position: relative;
+    z-index: 9998; /* above overlay, below toggle */
+    width: min(680px, calc(100% - 48px));
+    max-width: 620px;
+    max-height: calc(100vh - 96px);
+    margin: 0 auto;
+    padding: 28px 28px;
+    border-radius: 12px;
+    background-color: rgba(8, 10, 12, 0.56); /* low-opacity dark tint */
     backdrop-filter: blur(10px) saturate(120%);
     -webkit-backdrop-filter: blur(10px) saturate(120%);
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 12px 40px rgba(2,6,10,0.6);
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 9999; /* ensure panel sits above overlay */
-    pointer-events: auto;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 10px 30px rgba(2, 6, 10, 0.6);
+    overflow: auto; /* scroll only if content exceeds viewport */
+    text-align: center; /* center links */
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Make links touch-friendly and centered */
-  .mobile-nav-active .navmenu>ul a {
+  /* Center links and increase tappable area */
+  .mobile-nav-active .navmenu a,
+  .mobile-nav-active .navmenu a:focus {
     display: block;
-    width: 100%;
-    padding: 12px 8px;
+    padding: 14px 12px;
     font-size: 18px;
+    line-height: 1.2;
     text-align: center;
-    border-radius: 8px;
+    justify-content: center;
+    color: var(--nav-dropdown-color);
+    border-radius: 6px;
   }
 
-  /* If content exceeds panel height, keep header toggle accessible */
-  .mobile-nav-active .navmenu>ul::-webkit-scrollbar { height: 8px; }
+  .mobile-nav-active .navmenu a + a {
+    margin-top: 6px;
+  }
+
+  /* Make sure dropdowns inside the mobile panel still behave visually */
+  .mobile-nav-active .navmenu .dropdown ul {
+    margin: 12px 0 0 0;
+    background: transparent;
+    position: static;
+  }
 }
 
 /*--------------------------------------------------------------

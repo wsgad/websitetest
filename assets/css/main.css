@@ -202,6 +202,20 @@ h6 {
   color: var(--heading-color);
 }
 
+/* Mobile site name shown in header (keeps layout intact on desktop) */
+.mobile-site-name {
+  display: none;
+}
+
+/* Ensure the header logo (used in header-name and .logo) is consistently sized */
+.header .logo img,
+.header .header-name img {
+  max-height: 36px;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .header .header-social-links {
   padding-right: 15px;
 }
@@ -268,6 +282,25 @@ body.index-page .footer .social-links {
   display: none !important;
 }
 
+/* Desktop: replace header social icons with the site logo */
+@media (min-width: 1200px) {
+  .header .header-social-links a:not(.header-name) {
+    display: none !important;
+  }
+
+  .header .header-social-links .header-name {
+    display: inline-block;
+  }
+
+  .header .header-social-links .header-name img {
+    max-height: 40px;
+  }
+
+  .header .header-social-links {
+    padding-right: 12px;
+  }
+}
+
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
@@ -284,6 +317,7 @@ body.index-page .footer .social-links {
 @media (min-width: 1200px) {
   .navmenu {
     padding: 0;
+    overflow: visible; /* allow dropdowns to render above other elements */
   }
 
   .navmenu ul {
@@ -357,8 +391,11 @@ body.index-page .footer .social-links {
 
   .navmenu .dropdown ul {
     margin: 0;
-    padding: 10px 0;
-    background: var(--nav-dropdown-background-color);
+    padding: 12px 0;
+    /* subtle glass surface for desktop dropdowns */
+    background-color: rgba(12, 14, 18, 0.46);
+    backdrop-filter: blur(6px) saturate(115%);
+    -webkit-backdrop-filter: blur(6px) saturate(115%);
     display: block;
     position: absolute;
     visibility: hidden;
@@ -366,9 +403,13 @@ body.index-page .footer .social-links {
     top: 130%;
     opacity: 0;
     transition: 0.3s;
-    border-radius: 4px;
-    z-index: 99;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1001; /* above header glass (997) but below global overlays */
+    box-shadow: 0 8px 20px rgba(2, 6, 10, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    -webkit-font-smoothing: antialiased;
+    will-change: transform, opacity;
+    overflow: visible; /* avoid clipping child dropdowns */
   }
 
   .navmenu .dropdown ul li {

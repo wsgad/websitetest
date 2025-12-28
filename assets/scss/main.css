@@ -292,8 +292,7 @@ body.index-page .footer .social-links {
 ------------------------------*/
 .scrolled .header {
   --background-color: #ffffff; /* white header on scroll */
-  --nav-color: #111827; /* dark nav links for readability */
-  --nav-hover-color: #6b7280; /* keep accent hover */
+  /* Navigation colors intentionally inherited from :root to preserve contrast */
   --nav-mobile-background-color: #f8fafc;
 }
 

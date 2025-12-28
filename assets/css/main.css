@@ -29,8 +29,10 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #111827;  /* Nav links on light background */
-  --nav-hover-color: #6b7280; /* Hover/active nav color (accent) */
+  /* Navigation colors (dark-theme tuned) */
+  --nav-color: #9CA3AF; /* Neutral grey for inactive nav text on dark backgrounds */
+  --nav-hover-color: color-mix(in srgb, #ffffff 28%, #9CA3AF 72%); /* gently transitions toward white on hover */
+  --nav-active-color: #ffffff; /* active nav item color (pure white) */
   --nav-mobile-background-color: #f8fafc; /* Mobile nav background (light) */
   --nav-dropdown-background-color: #ffffff; /* Dropdown background */
   --nav-dropdown-color: #374151; /* Dropdown link color */
@@ -305,8 +307,7 @@ body.index-page .footer .social-links {
 ------------------------------*/
 .scrolled .header {
   --background-color: #ffffff; /* white header on scroll */
-  --nav-color: #111827; /* dark nav links for readability */
-  --nav-hover-color: #6b7280; /* keep accent hover */
+  /* Navigation colors intentionally inherited from :root to preserve contrast */
   --nav-mobile-background-color: #f8fafc;
 }
 
@@ -452,6 +453,97 @@ body.index-page .footer .social-links {
     visibility: visible;
   }
 }
+
+/* -----------------------------
+   Global Navigation Color System
+   Enforce variable-driven colors across desktop, mobile, dropdowns
+   and deep-dropdowns. Neutralize scrolled/sticky color overrides.
+   ----------------------------- */
+
+/* Base nav link colors (use variables only) */
+.navmenu a,
+.navmenu a:focus {
+  color: var(--nav-color);
+  transition: color 0.18s ease;
+}
+
+.navmenu a:hover,
+.navmenu a:focus,
+.navmenu .active,
+.navmenu .active:focus {
+  color: var(--nav-hover-color);
+}
+
+.navmenu .active,
+.navmenu li.active > a {
+  color: var(--nav-active-color);
+}
+
+/* Ensure dropdown and deep-dropdown link colors follow the same vars */
+.navmenu .dropdown ul a,
+.navmenu .dropdown .dropdown ul a,
+.navmenu .dropdown ul a:focus {
+  color: var(--nav-color);
+}
+
+.navmenu .dropdown ul a:hover,
+.navmenu .dropdown .dropdown ul a:hover {
+  color: var(--nav-hover-color);
+}
+
+.navmenu .dropdown ul .active,
+.navmenu .dropdown .dropdown ul .active {
+  color: var(--nav-active-color);
+}
+
+/* Neutralize sticky / scrolled header color overrides so hierarchy stays consistent */
+.header-scrolled .navmenu a,
+.sticked .navmenu a,
+.scrolled .navmenu a,
+.scrolled .header .navmenu a {
+  color: var(--nav-color) !important;
+}
+
+.header-scrolled .navmenu a:hover,
+.sticked .navmenu a:hover,
+.scrolled .navmenu a:hover {
+  color: var(--nav-hover-color) !important;
+}
+
+.header-scrolled .navmenu .active,
+.sticked .navmenu .active,
+.scrolled .navmenu .active {
+  color: var(--nav-active-color) !important;
+}
+
+/* -----------------------------
+   Deep dropdown glass style (match first-level dropdowns)
+   ----------------------------- */
+.navmenu .dropdown .dropdown ul {
+  background-color: rgba(12, 14, 18, 0.46);
+  backdrop-filter: blur(6px) saturate(115%);
+  -webkit-backdrop-filter: blur(6px) saturate(115%);
+  display: block;
+  position: absolute;
+  visibility: hidden;
+  left: -90%;
+  top: 0;
+  opacity: 0;
+  transition: 0.3s;
+  border-radius: 8px;
+  z-index: 1001;
+  box-shadow: 0 8px 20px rgba(2, 6, 10, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  overflow: visible;
+}
+
+.navmenu .dropdown .dropdown:hover>ul {
+  opacity: 1;
+  top: 0;
+  left: -100%;
+  visibility: visible;
+}
+
 
 /* Mobile Navigation */
 @media (max-width: 1199px) {
@@ -660,6 +752,27 @@ html, body {
 
   .mobile-nav-active .navmenu>ul > li + li {
     margin-top: 4px; /* keep vertical spacing unchanged */
+  }
+
+  /* Mobile menu typography consistency (mobile-only, strictly scoped) */
+  .mobile-nav-active .navmenu>ul,
+  .mobile-nav-active .navmenu>ul li,
+  .mobile-nav-active .navmenu>ul li a,
+  .mobile-nav-active .navmenu>ul li a * {
+    font-family: var(--nav-font);
+    font-size: 18px;
+    letter-spacing: 0px;
+    line-height: 1.2;
+  }
+
+  /* Weight: inactive lighter, active uses requested stronger weight */
+  .mobile-nav-active .navmenu>ul > li > a {
+    font-weight: 250;
+  }
+
+  .mobile-nav-active .navmenu>ul > li.active > a,
+  .mobile-nav-active .navmenu>ul > li > a:active {
+    font-weight: 500;
   }
 
   /* Make sure dropdowns inside the mobile panel still behave visually */

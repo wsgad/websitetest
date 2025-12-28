@@ -5,20 +5,19 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
-
 /*--------------------------------------------------------------
 # Font & Color Variables
 # Help: https://bootstrapmade.com/color-system/
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Poppins", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
+:root {
   --background-color: #000000; /* Dark page background */
   --default-color: #ffffff; /* Primary body/text color (white) */
   --heading-color: #ffffff; /* Headings in white */
@@ -29,7 +28,7 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #111827;  /* Nav links on light background */
+  --nav-color: #111827; /* Nav links on light background */
   --nav-hover-color: #6b7280; /* Hover/active nav color (accent) */
   --nav-mobile-background-color: #f8fafc; /* Mobile nav background (light) */
   --nav-dropdown-background-color: #ffffff; /* Dropdown background */
@@ -38,7 +37,6 @@
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
-
 .light-background {
   --background-color: #ffffff;
   --default-color: #374151;
@@ -137,12 +135,10 @@ h6 {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
 }
-
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
@@ -249,26 +245,21 @@ h6 {
   .header .logo {
     order: 1;
   }
-
   .header .header-social-links {
     order: 2;
   }
-
   .header .navmenu {
     order: 3;
   }
 }
-
 @media (max-width: 1199px) {
   .header .header-social-links a {
     display: none;
   }
-
   .header .header-social-links .header-name {
     display: inline-block;
   }
 }
-
 /* Hide header and footer social icons on the homepage */
 body.index-page .header-social-links a:not(.header-name) {
   display: none !important;
@@ -287,20 +278,16 @@ body.index-page .footer .social-links {
   .header .header-social-links a:not(.header-name) {
     display: none !important;
   }
-
   .header .header-social-links .header-name {
     display: inline-block;
   }
-
   .header .header-social-links .header-name img {
     max-height: 40px;
   }
-
   .header .header-social-links {
     padding-right: 12px;
   }
 }
-
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
@@ -319,7 +306,6 @@ body.index-page .footer .social-links {
     padding: 0;
     overflow: visible; /* allow dropdowns to render above other elements */
   }
-
   .navmenu ul {
     margin: 0;
     padding: 0;
@@ -327,20 +313,16 @@ body.index-page .footer .social-links {
     list-style: none;
     align-items: center;
   }
-
   .navmenu li {
     position: relative;
   }
-
-  .navmenu>ul>li {
+  .navmenu > ul > li {
     white-space: nowrap;
     padding: 15px 28px 15px 0;
   }
-
-  .navmenu>ul>li:last-child {
+  .navmenu > ul > li:last-child {
     padding-right: 0;
   }
-
   .navmenu a,
   .navmenu a:focus {
     color: var(--nav-color);
@@ -355,7 +337,6 @@ body.index-page .footer .social-links {
     transition: 0.3s;
     position: relative;
   }
-
   .navmenu a i,
   .navmenu a:focus i {
     font-size: 12px;
@@ -363,8 +344,7 @@ body.index-page .footer .social-links {
     margin-left: 5px;
     transition: 0.3s;
   }
-
-  .navmenu>ul>li>a:before {
+  .navmenu > ul > li > a:before {
     content: "";
     position: absolute;
     height: 2px;
@@ -375,20 +355,17 @@ body.index-page .footer .social-links {
     width: 0px;
     transition: all 0.3s ease-in-out 0s;
   }
-
   .navmenu a:hover:before,
-  .navmenu li:hover>a:before,
+  .navmenu li:hover > a:before,
   .navmenu .active:before {
     visibility: visible;
     width: 25px;
   }
-
-  .navmenu li:hover>a,
+  .navmenu li:hover > a,
   .navmenu .active,
   .navmenu .active:focus {
     color: var(--nav-hover-color);
   }
-
   .navmenu .dropdown ul {
     margin: 0;
     padding: 12px 0;
@@ -411,48 +388,40 @@ body.index-page .footer .social-links {
     will-change: transform, opacity;
     overflow: visible; /* avoid clipping child dropdowns */
   }
-
   .navmenu .dropdown ul li {
     min-width: 200px;
   }
-
   .navmenu .dropdown ul a {
     padding: 10px 20px;
     font-size: 15px;
     text-transform: none;
     color: var(--nav-dropdown-color);
   }
-
   .navmenu .dropdown ul a i {
     font-size: 12px;
   }
-
   .navmenu .dropdown ul a:hover,
   .navmenu .dropdown ul .active:hover,
-  .navmenu .dropdown ul li:hover>a {
+  .navmenu .dropdown ul li:hover > a {
     color: var(--nav-dropdown-hover-color);
   }
-
-  .navmenu .dropdown:hover>ul {
+  .navmenu .dropdown:hover > ul {
     opacity: 1;
     top: 100%;
     visibility: visible;
   }
-
   .navmenu .dropdown .dropdown ul {
     top: 0;
     left: -90%;
     visibility: hidden;
   }
-
-  .navmenu .dropdown .dropdown:hover>ul {
+  .navmenu .dropdown .dropdown:hover > ul {
     opacity: 1;
     top: 0;
     left: -100%;
     visibility: visible;
   }
 }
-
 /* Mobile Navigation */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
@@ -463,12 +432,10 @@ body.index-page .footer .social-links {
     cursor: pointer;
     transition: color 0.3s;
   }
-
   .navmenu {
     padding: 0;
     z-index: 9997;
   }
-
   .navmenu ul {
     display: none;
     list-style: none;
@@ -484,7 +451,6 @@ body.index-page .footer .social-links {
     transition: 0.3s;
     z-index: 9998;
   }
-
   .navmenu a,
   .navmenu a:focus {
     color: var(--nav-dropdown-color);
@@ -498,7 +464,6 @@ body.index-page .footer .social-links {
     white-space: nowrap;
     transition: 0.3s;
   }
-
   .navmenu a i,
   .navmenu a:focus i {
     font-size: 12px;
@@ -513,26 +478,22 @@ body.index-page .footer .social-links {
     transition: 0.3s;
     background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
   }
-
   .navmenu a i:hover,
   .navmenu a:focus i:hover {
     background-color: var(--accent-color);
     color: var(--contrast-color);
   }
-
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
     color: var(--nav-dropdown-hover-color);
   }
-
   .navmenu .active i,
   .navmenu .active:focus i {
     background-color: var(--accent-color);
     color: var(--contrast-color);
     transform: rotate(180deg);
   }
-
   .navmenu .dropdown ul {
     position: static;
     display: none;
@@ -542,20 +503,16 @@ body.index-page .footer .social-links {
     background-color: var(--nav-dropdown-background-color);
     transition: all 0.5s ease-in-out;
   }
-
   .navmenu .dropdown ul ul {
     background-color: rgba(33, 37, 41, 0.1);
   }
-
-  .navmenu .dropdown>.dropdown-active {
+  .navmenu .dropdown > .dropdown-active {
     display: block;
     background-color: rgba(33, 37, 41, 0.03);
   }
-
   .mobile-nav-active {
     overflow: hidden;
   }
-
   .mobile-nav-active .mobile-nav-toggle {
     color: #fff;
     position: absolute;
@@ -565,7 +522,6 @@ body.index-page .footer .social-links {
     margin-right: 0;
     z-index: 9999;
   }
-
   /* Centered glass-morphism mobile menu overlay
      - Keep the existing toggle logic and z-index ordering
      - Mobile toggle button has z-index: 9999 so it stays above this overlay and remains clickable */
@@ -582,113 +538,72 @@ body.index-page .footer .social-links {
     overflow: hidden; /* container doesn't scroll; inner box can */
     touch-action: manipulation;
   }
-
   /* The centered glass panel */
-  .mobile-nav-active .navmenu>ul {
+  .mobile-nav-active .navmenu > ul {
     display: block;
     position: relative;
     z-index: 9998; /* above overlay, below toggle */
-    width: calc(100% - 32px);
-    max-width: 520px;
-    margin: 12px auto;
-    padding: 10px 8px;
-    border-radius: 10px;
-    /* boxed panel visual (solid dark panel) - no viewport-level blur */
-    background-color: rgba(12, 14, 18, 0.98);
+    width: min(680px, 100% - 48px);
+    max-width: 620px;
+    max-height: calc(100vh - 96px);
+    margin: 0 auto;
+    padding: 28px 28px;
+    border-radius: 12px;
+    background-color: rgba(8, 10, 12, 0.56); /* low-opacity dark tint */
+    /* Apply blur only to this inner panel when supported */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    overflow: auto; /* scroll only inside panel if needed */
-    text-align: center; /* center link text */
+    box-shadow: 0 10px 30px rgba(2, 6, 10, 0.6);
+    overflow: auto; /* scroll only if content exceeds viewport */
+    text-align: center; /* center links */
     -webkit-overflow-scrolling: touch;
-    /* animate only opacity and transform on the panel */
-    transition: opacity 220ms ease, transform 220ms ease;
-    transform: translateY(0);
-    opacity: 1;
   }
-
-/* Enable panel-only glass on browsers that support backdrop-filter */
-@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  /* If browser supports it, apply a very subtle blur to the panel only.
-     This is intentionally mild to avoid mobile/iOS artifacts. */
-  .mobile-nav-active .navmenu>ul {
-    backdrop-filter: blur(4px) saturate(110%);
-    -webkit-backdrop-filter: blur(4px) saturate(110%);
+  /* Enable panel-only glass on browsers that support backdrop-filter */
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .mobile-nav-active .navmenu > ul {
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+    }
   }
-}
-
-/* iOS / Safari safety: ensure overlay never applies backdrop-filter at viewport level
-   and isolate hero elements so they are not part of the same compositing group. */
-/* Prevent unexpected scaling/blur of large background typography on iOS */
-.hero,
-.hero .hero-content,
-.hero .hero-image,
-.hero .hero-content h1,
-.hero .hero-content h2 {
-  isolation: isolate;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Extra guard: ensure no transforms applied to body/html by other rules */
-html, body {
-  transform: none !important;
-}
-
-  /* Center links, white text, and touch-friendly spacing */
+  /* iOS / Safari safety: ensure overlay never applies backdrop-filter at viewport level
+     and isolate hero elements so they are not part of the same compositing group. */
+  /* Prevent unexpected scaling/blur of large background typography on iOS */
+  .hero,
+  .hero .hero-content,
+  .hero .hero-image,
+  .hero .hero-content h1,
+  .hero .hero-content h2 {
+    isolation: isolate;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Extra guard: ensure no transforms applied to body/html by other rules */
+  html, body {
+    transform: none !important;
+  }
+  /* Center links and increase tappable area */
   .mobile-nav-active .navmenu a,
   .mobile-nav-active .navmenu a:focus {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center; /* center text + icon group */
-    width: 100%;
-    padding: 12px 10px;
+    display: block;
+    padding: 14px 12px;
     font-size: 18px;
     line-height: 1.2;
-    color: #ffffff; /* enforce white text */
-    text-decoration: none;
-    background: transparent;
+    text-align: center;
+    justify-content: center;
+    color: var(--nav-dropdown-color);
     border-radius: 6px;
-    position: relative;
   }
-
   .mobile-nav-active .navmenu a + a {
-    margin-top: 4px;
+    margin-top: 6px;
   }
-
   /* Make sure dropdowns inside the mobile panel still behave visually */
   .mobile-nav-active .navmenu .dropdown ul {
     margin: 12px 0 0 0;
     background: transparent;
     position: static;
   }
-
-  /* subtle underline effect on hover/focus/active using transform (allowed animation) */
-  .mobile-nav-active .navmenu a::after {
-    content: "";
-    display: block;
-    height: 2px;
-    width: 60%;
-    background: color-mix(in srgb, var(--contrast-color), var(--accent-color) 10%);
-    margin: 6px auto 0 auto;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 160ms ease;
-  }
-
-  .mobile-nav-active .navmenu a:hover::after,
-  .mobile-nav-active .navmenu a:focus::after,
-  .mobile-nav-active .navmenu .active::after {
-    transform: scaleX(1);
-  }
-
-  /* Keep dropdown toggle icon inline next to the text */
-  .mobile-nav-active .navmenu a i {
-    margin-left: 8px;
-    font-size: 14px;
-    flex: none;
-  }
 }
-
 /*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
@@ -769,7 +684,6 @@ html, body {
     left: calc(50% - 5px);
     opacity: 1;
   }
-
   100% {
     width: 72px;
     height: 72px;
@@ -778,7 +692,6 @@ html, body {
     opacity: 0;
   }
 }
-
 /*--------------------------------------------------------------
 # Scroll Top Button
 --------------------------------------------------------------*/
@@ -821,7 +734,6 @@ html, body {
     transition-delay: 0 !important;
   }
 }
-
 /*--------------------------------------------------------------
 # Global Page Titles & Breadcrumbs
 --------------------------------------------------------------*/
@@ -856,11 +768,11 @@ html, body {
   font-weight: 400;
 }
 
-.page-title nav ol li+li {
+.page-title nav ol li + li {
   padding-left: 10px;
 }
 
-.page-title nav ol li+li::before {
+.page-title nav ol li + li::before {
   content: "/";
   display: inline-block;
   padding-right: 10px;
@@ -880,13 +792,11 @@ section,
 }
 
 @media (max-width: 1199px) {
-
   section,
   .section {
     scroll-margin-top: 66px;
   }
 }
-
 /*--------------------------------------------------------------
 # Global Section Titles
 --------------------------------------------------------------*/
@@ -910,7 +820,6 @@ section,
     font-size: 2.5rem;
   }
 }
-
 .section-title p {
   font-size: 1.125rem;
   line-height: 1.8;
@@ -951,7 +860,6 @@ section,
     font-size: 2.5rem;
   }
 }
-
 .hero .hero-content h2 {
   font-size: 1.5rem;
   font-weight: 400;
@@ -969,7 +877,6 @@ section,
     font-size: 1.25rem;
   }
 }
-
 .hero .hero-content p {
   font-size: 1.1rem;
   line-height: 1.6;
@@ -1018,12 +925,10 @@ section,
   .hero .hero-actions {
     flex-direction: column;
   }
-
   .hero .hero-actions .btn {
     text-align: center;
   }
 }
-
 .hero .social-links {
   display: flex;
   gap: 1rem;
@@ -1119,26 +1024,20 @@ section,
     display: none;
   }
 }
-
 @keyframes float {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px);
   }
-
   50% {
     transform: translateY(-10px);
   }
 }
-
 @media (max-width: 992px) {
   .hero .hero-content {
     text-align: center;
     margin-bottom: 3rem;
   }
 }
-
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
@@ -1389,22 +1288,18 @@ section,
   .about .profile-figure {
     text-align: center !important;
   }
-
   .about .profile-figure .profile-photo {
     width: 72%;
   }
-
   .about .intro-content .cta-group {
     flex-wrap: wrap;
   }
 }
-
 @media (max-width: 576px) {
   .about .profile-figure .profile-photo {
     width: 100%;
   }
 }
-
 /*--------------------------------------------------------------
 # Skills Section
 --------------------------------------------------------------*/
@@ -1486,44 +1381,35 @@ section,
   .stats .row {
     text-align: center;
   }
-
   .stats .avatars {
     justify-content: center;
     margin-bottom: 40px;
   }
-
   .stats .counters h2 {
     font-size: 36px;
   }
-
   .stats .counters p {
     font-size: 16px;
   }
-
   .stats .counters .col-md-4 {
     margin-bottom: 30px;
   }
-
   .stats .counters .col-md-4:last-child {
     margin-bottom: 0;
   }
 }
-
 @media (max-width: 576px) {
   .stats {
     padding: 60px 0;
   }
-
   .stats .avatars {
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .stats .avatars img {
     margin: 0 -8px;
   }
 }
-
 /*--------------------------------------------------------------
 # Testimonials Section
 --------------------------------------------------------------*/
@@ -1738,17 +1624,14 @@ section,
     margin-bottom: 2rem;
   }
 }
-
 @media (max-width: 767.98px) {
   .resume .resume-content {
     padding-left: 1rem !important;
   }
-
   .resume article::before {
     left: -2rem !important;
   }
 }
-
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
@@ -1861,55 +1744,45 @@ section,
     padding: 1.5rem;
     margin-bottom: 1rem;
   }
-
   .services .service-icon {
     width: 60px;
     height: 60px;
     margin-right: 1rem;
   }
-
   .services .service-icon i {
     font-size: 1.5rem;
   }
-
   .services .service-content h3 {
     font-size: 1.2rem;
     margin-bottom: 0.75rem;
   }
-
   .services .service-content p {
     margin-bottom: 1rem;
     font-size: 0.95rem;
   }
 }
-
 @media (max-width: 575.98px) {
   .services .service-item {
     flex-direction: column;
     text-align: center;
   }
-
   .services .service-item::before {
     width: 100%;
     height: 4px;
     transform: scaleX(0);
     transform-origin: left;
   }
-
   .services .service-item:hover::before {
     transform: scaleX(1);
   }
-
   .services .service-icon {
     margin-right: 0;
     margin-bottom: 1.25rem;
   }
-
   .services .service-link {
     justify-content: center;
   }
 }
-
 /*--------------------------------------------------------------
 # Service Details Section
 --------------------------------------------------------------*/
@@ -1966,7 +1839,8 @@ section,
 .service-details .service-visual img {
   width: 100%;
   height: 400px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   transition: transform 0.5s ease;
 }
 
@@ -2133,7 +2007,6 @@ section,
     margin-top: 4rem;
   }
 }
-
 .service-details .overview-card,
 .service-details .success-story,
 .service-details .consultation-form {
@@ -2232,7 +2105,8 @@ section,
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .service-details .success-story .story-author .author-details h5 {
@@ -2338,6 +2212,10 @@ section,
   border-color: var(--accent-color);
 }
 
+.service-details .consultation-form input[type=text]::-moz-placeholder, .service-details .consultation-form input[type=email]::-moz-placeholder, .service-details .consultation-form input[type=tel]::-moz-placeholder, .service-details .consultation-form select::-moz-placeholder, .service-details .consultation-form textarea::-moz-placeholder {
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
 .service-details .consultation-form input[type=text]::placeholder,
 .service-details .consultation-form input[type=email]::placeholder,
 .service-details .consultation-form input[type=tel]::placeholder,
@@ -2376,43 +2254,34 @@ section,
   .service-details .service-hero h1 {
     font-size: 2.5rem;
   }
-
   .service-details .service-hero .service-description {
     font-size: 1.1rem;
   }
-
   .service-details .service-visual img {
     height: 250px;
   }
-
   .service-details .benefits-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-
   .service-details .timeline-section .timeline::before {
     left: 20px;
   }
-
   .service-details .timeline-section .timeline .timeline-item {
     padding-left: 60px;
   }
-
   .service-details .timeline-section .timeline .timeline-item .timeline-marker {
     width: 40px;
     height: 40px;
   }
-
   .service-details .timeline-section .timeline .timeline-item .timeline-marker span {
     font-size: 1rem;
   }
-
   .service-details .overview-card .overview-stats {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 }
-
 /*--------------------------------------------------------------
 # Portfolio Section
 --------------------------------------------------------------*/
@@ -2588,7 +2457,8 @@ section,
 
 .portfolio-details .portfolio-details-media .main-image .portfolio-details-slider .swiper-slide img {
   aspect-ratio: 3/2;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   width: 100%;
 }
 
@@ -2620,7 +2490,8 @@ section,
 
 .portfolio-details .portfolio-details-media .thumbnail-grid img {
   height: 80px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -2874,39 +2745,32 @@ section,
     padding-left: 1rem;
   }
 }
-
 @media (max-width: 991.98px) {
   .portfolio-details .portfolio-details-content {
     padding: 2rem 0 0 0;
   }
-
   .portfolio-details .portfolio-details-content .cta-buttons {
     margin-top: 2rem;
   }
 }
-
 @media (max-width: 767.98px) {
   .portfolio-details .project-meta {
     flex-direction: column;
     gap: 1rem;
   }
-
   .portfolio-details .project-meta .date-client {
     flex-direction: column;
     gap: 0.5rem;
   }
-
   .portfolio-details .cta-buttons {
     flex-direction: column;
     width: 100%;
   }
-
   .portfolio-details .cta-buttons a {
     width: 100%;
     text-align: center;
   }
 }
-
 /*--------------------------------------------------------------
 # Contact Section
 --------------------------------------------------------------*/
@@ -2928,7 +2792,6 @@ section,
     font-size: 1.75rem;
   }
 }
-
 .contact .info-box p {
   opacity: 0.8;
   margin-bottom: 2rem;
@@ -2943,7 +2806,6 @@ section,
     padding: 1.5rem;
   }
 }
-
 .contact .info-item {
   display: flex;
   gap: 1.5rem;
@@ -3004,7 +2866,6 @@ section,
     padding: 1.5rem;
   }
 }
-
 .contact .contact-form h3 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -3015,7 +2876,6 @@ section,
     font-size: 1.75rem;
   }
 }
-
 .contact .contact-form p {
   color: color-mix(in srgb, var(--default-color), transparent 25%);
   margin-bottom: 2rem;
@@ -3034,6 +2894,10 @@ section,
 .contact .contact-form .form-select:focus {
   box-shadow: none;
   border-color: var(--accent-color);
+}
+
+.contact .contact-form .form-control::-moz-placeholder, .contact .contact-form .form-select::-moz-placeholder {
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
 }
 
 .contact .contact-form .form-control::placeholder,
@@ -3065,4 +2929,4 @@ section,
 --------------------------------------------------------------*/
 .starter-section {
   /* Add your styles here */
-}
+}/*# sourceMappingURL=main.css.map */

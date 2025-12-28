@@ -588,31 +588,28 @@ body.index-page .footer .social-links {
     display: block;
     position: relative;
     z-index: 9998; /* above overlay, below toggle */
-    width: calc(100% - 32px);
-    max-width: 520px;
-    margin: 12px auto;
-    padding: 10px 8px;
-    border-radius: 10px;
-    /* boxed panel visual (solid dark panel) - no viewport-level blur */
-    background-color: rgba(12, 14, 18, 0.98);
+    width: min(680px, calc(100% - 48px));
+    max-width: 620px;
+    max-height: calc(100vh - 96px);
+    margin: 0 auto;
+    padding: 28px 28px;
+    border-radius: 12px;
+    background-color: rgba(8, 10, 12, 0.56); /* low-opacity dark tint */
+    /* Apply blur only to this inner panel when supported */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    overflow: auto; /* scroll only inside panel if needed */
-    text-align: center; /* center link text */
+    box-shadow: 0 10px 30px rgba(2, 6, 10, 0.6);
+    overflow: auto; /* scroll only if content exceeds viewport */
+    text-align: center; /* center links */
     -webkit-overflow-scrolling: touch;
-    /* animate only opacity and transform on the panel */
-    transition: opacity 220ms ease, transform 220ms ease;
-    transform: translateY(0);
-    opacity: 1;
   }
 
 /* Enable panel-only glass on browsers that support backdrop-filter */
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  /* If browser supports it, apply a very subtle blur to the panel only.
-     This is intentionally mild to avoid mobile/iOS artifacts. */
   .mobile-nav-active .navmenu>ul {
-    backdrop-filter: blur(4px) saturate(110%);
-    -webkit-backdrop-filter: blur(4px) saturate(110%);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
   }
 }
 
@@ -634,25 +631,21 @@ html, body {
   transform: none !important;
 }
 
-  /* Center links, white text, and touch-friendly spacing */
+  /* Center links and increase tappable area */
   .mobile-nav-active .navmenu a,
   .mobile-nav-active .navmenu a:focus {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center; /* center text + icon group */
-    width: 100%;
-    padding: 12px 10px;
+    display: block;
+    padding: 14px 12px;
     font-size: 18px;
     line-height: 1.2;
-    color: #ffffff; /* enforce white text */
-    text-decoration: none;
-    background: transparent;
+    text-align: center;
+    justify-content: center;
+    color: var(--nav-dropdown-color);
     border-radius: 6px;
-    position: relative;
   }
 
   .mobile-nav-active .navmenu a + a {
-    margin-top: 4px;
+    margin-top: 6px;
   }
 
   /* Make sure dropdowns inside the mobile panel still behave visually */
@@ -660,32 +653,6 @@ html, body {
     margin: 12px 0 0 0;
     background: transparent;
     position: static;
-  }
-
-  /* subtle underline effect on hover/focus/active using transform (allowed animation) */
-  .mobile-nav-active .navmenu a::after {
-    content: "";
-    display: block;
-    height: 2px;
-    width: 60%;
-    background: color-mix(in srgb, var(--contrast-color), var(--accent-color) 10%);
-    margin: 6px auto 0 auto;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 160ms ease;
-  }
-
-  .mobile-nav-active .navmenu a:hover::after,
-  .mobile-nav-active .navmenu a:focus::after,
-  .mobile-nav-active .navmenu .active::after {
-    transform: scaleX(1);
-  }
-
-  /* Keep dropdown toggle icon inline next to the text */
-  .mobile-nav-active .navmenu a i {
-    margin-left: 8px;
-    font-size: 14px;
-    flex: none;
   }
 }
 

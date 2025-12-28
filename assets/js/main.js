@@ -61,6 +61,32 @@
   });
 
   /**
+   * Allow tapping the dropdown row (anchor) to toggle its submenu on mobile
+   * - only for mobile widths, keep desktop hover behaviour
+   * - prevents the generic '#navmenu a' handler from closing the menu
+   */
+  function isMobileWidth() {
+    return window.matchMedia('(max-width: 1199px)').matches;
+  }
+
+  document.querySelectorAll('#navmenu li.dropdown > a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      try {
+        if (!isMobileWidth()) return; // desktop: keep hover behavior
+        // If click target was the small toggle icon, let existing handler run
+        if (e.target && e.target.classList && e.target.classList.contains('toggle-dropdown')) return;
+        e.preventDefault();
+        this.parentNode.classList.toggle('active');
+        var submenu = this.nextElementSibling;
+        if (submenu) submenu.classList.toggle('dropdown-active');
+        e.stopImmediatePropagation();
+      } catch (err) {
+        // do nothing on error
+      }
+    }, false);
+  });
+
+  /**
    * Preloader
    */
   const preloader = document.querySelector('#preloader');

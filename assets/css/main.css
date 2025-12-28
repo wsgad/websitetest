@@ -442,14 +442,14 @@ body.index-page .footer .social-links {
 
   .navmenu .dropdown .dropdown ul {
     top: 0;
-    left: -90%;
+    left: 100%; /* open to the RIGHT of parent on desktop */
     visibility: hidden;
   }
 
   .navmenu .dropdown .dropdown:hover>ul {
     opacity: 1;
     top: 0;
-    left: -100%;
+    left: 100%; /* keep same right-opening position when visible */
     visibility: visible;
   }
 }
@@ -526,7 +526,7 @@ body.index-page .footer .social-links {
   display: block;
   position: absolute;
   visibility: hidden;
-  left: -90%;
+  left: 100%;
   top: 0;
   opacity: 0;
   transition: 0.3s;
@@ -540,7 +540,7 @@ body.index-page .footer .social-links {
 .navmenu .dropdown .dropdown:hover>ul {
   opacity: 1;
   top: 0;
-  left: -100%;
+  left: 100%;
   visibility: visible;
 }
 
@@ -780,6 +780,20 @@ html, body {
     margin: 12px 0 0 0;
     background: transparent;
     position: static;
+  }
+
+  /* Mobile: deep-dropdown text should use nav color variables (avoid inheriting box colors) */
+  .mobile-nav-active .navmenu .dropdown .dropdown ul a,
+  .mobile-nav-active .navmenu .dropdown .dropdown ul a * {
+    color: var(--nav-color);
+  }
+
+  .mobile-nav-active .navmenu .dropdown .dropdown ul a:hover {
+    color: var(--nav-hover-color);
+  }
+
+  .mobile-nav-active .navmenu .dropdown .dropdown ul .active {
+    color: var(--nav-active-color);
   }
 
   /* subtle underline effect on hover/focus/active using transform (allowed animation) */

@@ -590,19 +590,24 @@ body.index-page .footer .social-links {
     z-index: 9998; /* above overlay, below toggle */
     width: calc(100% - 32px);
     max-width: 520px;
-    margin: 12px auto;
+    /* right-side pop-out: push panel to the right edge */
+    margin: 12px 0 12px auto;
     padding: 10px 8px;
-    border-radius: 10px;
-    /* boxed panel visual (solid dark panel) - no viewport-level blur */
+    /* remove right-side border-radius so the box is flush on right edge */
+    border-radius: 10px 0 0 10px;
+    /* keep existing boxed panel visual intact */
     background-color: rgba(12, 14, 18, 0.98);
     border: 1px solid rgba(255, 255, 255, 0.04);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    overflow: auto; /* scroll only inside panel if needed */
+    /* internal scrolling when content exceeds available height */
+    max-height: calc(100vh - 40px);
+    overflow-y: auto; /* vertical scroll only inside panel */
+    overflow-x: hidden;
     text-align: center; /* center link text */
     -webkit-overflow-scrolling: touch;
     /* animate only opacity and transform on the panel */
     transition: opacity 220ms ease, transform 220ms ease;
-    transform: translateY(0);
+    transform: translateX(6px);
     opacity: 1;
   }
 
@@ -663,22 +668,13 @@ html, body {
   }
 
   /* subtle underline effect on hover/focus/active using transform (allowed animation) */
-  .mobile-nav-active .navmenu a::after {
-    content: "";
-    display: block;
-    height: 2px;
-    width: 60%;
-    background: color-mix(in srgb, var(--contrast-color), var(--accent-color) 10%);
-    margin: 6px auto 0 auto;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 160ms ease;
-  }
-
-  .mobile-nav-active .navmenu a:hover::after,
-  .mobile-nav-active .navmenu a:focus::after,
-  .mobile-nav-active .navmenu .active::after {
-    transform: scaleX(1);
+  /* hover/active: subtle opacity change only (no underline or dividers) */
+  .mobile-nav-active .navmenu a:hover,
+  .mobile-nav-active .navmenu a:focus,
+  .mobile-nav-active .navmenu .active {
+    background: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
+    opacity: 0.98;
   }
 
   /* Keep dropdown toggle icon inline next to the text */

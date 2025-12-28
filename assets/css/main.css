@@ -634,34 +634,25 @@ html, body {
   transform: none !important;
 }
 
-  /* Strict scope: only affect direct children of the mobile panel */
-  .mobile-nav-active .navmenu>ul > li {
-    display: flex;
-    justify-content: center; /* center each item horizontally */
-  }
-
-  .mobile-nav-active .navmenu>ul > li > a,
-  .mobile-nav-active .navmenu>ul > li > a:focus {
-    display: inline-flex; /* keep text and icon on one row */
+  /* Center links, white text, and touch-friendly spacing */
+  .mobile-nav-active .navmenu a,
+  .mobile-nav-active .navmenu a:focus {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: auto; /* shrink-to-fit so underline matches text */
+    justify-content: center; /* center text + icon group */
+    width: 100%;
     padding: 12px 10px;
     font-size: 18px;
     line-height: 1.2;
-    color: #ffffff; /* white text */
-    text-decoration: underline;
-    text-decoration-color: transparent; /* animate color on hover/active */
-    text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
+    color: #ffffff; /* enforce white text */
+    text-decoration: none;
     background: transparent;
     border-radius: 6px;
     position: relative;
-    transition: text-decoration-color 160ms ease;
   }
 
-  .mobile-nav-active .navmenu>ul > li + li {
-    margin-top: 6px;
+  .mobile-nav-active .navmenu a + a {
+    margin-top: 4px;
   }
 
   /* Make sure dropdowns inside the mobile panel still behave visually */
@@ -671,15 +662,27 @@ html, body {
     position: static;
   }
 
-  /* Underline appears by revealing the text-decoration color */
-  .mobile-nav-active .navmenu>ul > li > a:hover,
-  .mobile-nav-active .navmenu>ul > li > a:focus,
-  .mobile-nav-active .navmenu>ul > li > a.active {
-    text-decoration-color: color-mix(in srgb, var(--contrast-color), var(--accent-color) 18%);
+  /* subtle underline effect on hover/focus/active using transform (allowed animation) */
+  .mobile-nav-active .navmenu a::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 60%;
+    background: color-mix(in srgb, var(--contrast-color), var(--accent-color) 10%);
+    margin: 6px auto 0 auto;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 160ms ease;
   }
 
-  /* Keep dropdown toggle icon inline next to the text (same row) */
-  .mobile-nav-active .navmenu>ul > li > a i {
+  .mobile-nav-active .navmenu a:hover::after,
+  .mobile-nav-active .navmenu a:focus::after,
+  .mobile-nav-active .navmenu .active::after {
+    transform: scaleX(1);
+  }
+
+  /* Keep dropdown toggle icon inline next to the text */
+  .mobile-nav-active .navmenu a i {
     margin-left: 8px;
     font-size: 14px;
     flex: none;

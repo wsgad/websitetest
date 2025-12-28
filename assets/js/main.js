@@ -201,4 +201,31 @@
     selector: '.glightbox'
   });
 
+  /**
+   * Close mobile nav when clicking/tapping outside the menu panel (mobile only)
+   * - respects existing toggle logic by calling `mobileNavToogle()`
+   * - does not modify HTML or existing handlers
+   */
+  (function() {
+    function isMobileWidth() {
+      return window.matchMedia('(max-width: 1199px)').matches;
+    }
+
+    document.addEventListener('click', function(e) {
+      try {
+        if (!isMobileWidth()) return; // desktop unaffected
+        if (!document.body.classList.contains('mobile-nav-active')) return; // only when open
+        var panel = document.querySelector('.mobile-nav-active .navmenu>ul');
+        var toggle = document.querySelector('.mobile-nav-toggle');
+        // If click is inside panel or on the toggle, ignore
+        if (panel && panel.contains(e.target)) return;
+        if (toggle && toggle.contains(e.target)) return;
+        // otherwise close using existing toggle function
+        if (typeof mobileNavToogle === 'function') mobileNavToogle();
+      } catch (err) {
+        // silent - do not interrupt existing behaviour
+      }
+    }, false);
+  })();
+
 })();

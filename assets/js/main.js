@@ -1,4 +1,27 @@
 /**
+ * Global Header Loader (auto)
+ * Injects header.html into #site-header on all pages.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+  const mount = document.getElementById("site-header");
+  if (mount) {
+    fetch("assets/partials/header.html")
+      .then(r => r.text())
+      .then(html => {
+          mount.innerHTML = html;
+          if (typeof window.initNavMenu === 'function') {
+            window.initNavMenu();
+          }
+        })
+      .catch(e => console.error("Global header load failed:", e));
+  }
+});
+
+/* ============================
+   ORIGINAL TEMPLATE JS BELOW
+   (unchanged behavior)
+   ============================ */
+/**
 * Template Name: FolioOne
 * Template URL: https://bootstrapmade.com/folioone-bootstrap-portfolio-website-template/
 * Updated: Aug 23 2025 with Bootstrap v5.3.7
@@ -23,42 +46,16 @@
   window.addEventListener('load', toggleScrolled);
 
   /**
-   * Mobile nav toggle
+   * Mobile nav toggle helper (queries elements at runtime)
    */
-  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
-
   function mobileNavToogle() {
     document.querySelector('body').classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('bi-list');
-    mobileNavToggleBtn.classList.toggle('bi-x');
+    const btn = document.querySelector('.mobile-nav-toggle');
+    if (btn) {
+      btn.classList.toggle('bi-list');
+      btn.classList.toggle('bi-x');
+    }
   }
-  if (mobileNavToggleBtn) {
-    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
-  }
-
-  /**
-   * Hide mobile nav on same-page/hash links
-   */
-  document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
-        mobileNavToogle();
-      }
-    });
-
-  });
-
-  /**
-   * Toggle mobile nav dropdowns
-   */
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
-      e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
-      e.stopImmediatePropagation();
-    });
-  });
 
   /**
    * Allow tapping the dropdown row (anchor) to toggle its submenu on mobile
@@ -69,21 +66,65 @@
     return window.matchMedia('(max-width: 1199px)').matches;
   }
 
-  document.querySelectorAll('#navmenu li.dropdown > a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      try {
-        if (!isMobileWidth()) return; // desktop: keep hover behavior
-        // If click target was the small toggle icon, let existing handler run
-        if (e.target && e.target.classList && e.target.classList.contains('toggle-dropdown')) return;
+  /**
+   * Expose an idempotent initializer so we can call it after
+   * the header is dynamically injected. It avoids duplicate listeners
+   * by marking elements with `data-nav-init` once handled.
+   */
+  window.initNavMenu = function() {
+    // Mobile toggle button
+    const toggleBtn = document.querySelector('.mobile-nav-toggle');
+    if (toggleBtn && !toggleBtn.dataset.navInit) {
+      toggleBtn.addEventListener('click', mobileNavToogle);
+      toggleBtn.dataset.navInit = 'true';
+    }
+
+    // Hide mobile nav on same-page/hash links
+    document.querySelectorAll('#navmenu a').forEach(navmenu => {
+      if (navmenu.dataset.navInit) return;
+      navmenu.addEventListener('click', () => {
+        if (document.querySelector('.mobile-nav-active')) {
+          mobileNavToogle();
+        }
+      });
+      navmenu.dataset.navInit = 'true';
+    });
+
+    // Toggle mobile nav dropdown icons
+    document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
+      if (navmenu.dataset.navInit) return;
+      navmenu.addEventListener('click', function(e) {
         e.preventDefault();
         this.parentNode.classList.toggle('active');
-        var submenu = this.nextElementSibling;
-        if (submenu) submenu.classList.toggle('dropdown-active');
+        if (this.parentNode.nextElementSibling) this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
         e.stopImmediatePropagation();
-      } catch (err) {
-        // do nothing on error
-      }
-    }, false);
+      });
+      navmenu.dataset.navInit = 'true';
+    });
+
+    // Anchor row toggles for dropdowns on mobile
+    document.querySelectorAll('#navmenu li.dropdown > a').forEach(anchor => {
+      if (anchor.dataset.navInit) return;
+      anchor.addEventListener('click', function(e) {
+        try {
+          if (!isMobileWidth()) return; // desktop: keep hover behavior
+          if (e.target && e.target.classList && e.target.classList.contains('toggle-dropdown')) return;
+          e.preventDefault();
+          this.parentNode.classList.toggle('active');
+          var submenu = this.nextElementSibling;
+          if (submenu) submenu.classList.toggle('dropdown-active');
+          e.stopImmediatePropagation();
+        } catch (err) {
+          // do nothing on error
+        }
+      }, false);
+      anchor.dataset.navInit = 'true';
+    });
+  };
+
+  // Run once on load in case header markup is already present
+  window.addEventListener('load', function() {
+    if (typeof window.initNavMenu === 'function') window.initNavMenu();
   });
 
   /**

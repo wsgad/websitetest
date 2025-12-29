@@ -1,124 +1,93 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
+  // Run ONLY on photography page
+  if (!document.body.classList.contains('photography-page')) return;
 
-  const gridEl = document.querySelector(".gallery-container");
-  const filtersEl = document.querySelector(".gallery-filters");
-  const lightboxEl = document.getElementById("project-lightbox");
-
-  let galleryInstance = null;
-  let allProjects = [];
-
-  /* ==========================
-     LOAD JSON
-  ========================== */
-  fetch("assets/img/photography/gallery.json")
-    .then(res => res.json())
-    .then(data => {
-      allProjects = data.projects;
-      renderFilters(allProjects);
-      renderGrid(allProjects);
-      initIsotope();
-    })
-    .catch(err => console.error("Gallery JSON error:", err));
-
-  /* ==========================
-     FILTERS
-  ========================== */
-  function renderFilters(projects) {
-    const cats = new Set(["all"]);
-    projects.forEach(p => p.categories.forEach(c => cats.add(c)));
-
-    cats.forEach(cat => {
-      const btn = document.createElement("button");
-      btn.className = "filter-btn";
-      btn.dataset.filter = cat === "all" ? "*" : `.${cat}`;
-      btn.textContent = cat;
-      if (cat === "all") btn.classList.add("active");
-      filtersEl.appendChild(btn);
-    });
+  /* =========================================================
+     SAFETY PATCH
+     Prevent main.js crash if .scroll-top doesn't exist
+     ========================================================= */
+  if (!document.querySelector('.scroll-top')) {
+    const dummyScrollTop = document.createElement('a');
+    dummyScrollTop.className = 'scroll-top';
+    dummyScrollTop.href = '#';
+    dummyScrollTop.style.display = 'none';
+    document.body.appendChild(dummyScrollTop);
   }
 
-  /* ==========================
-     GRID
-  ========================== */
-  function renderGrid(projects) {
-    projects.forEach(project => {
+  /* =========================================================
+     GALLERY LOGIC
+     ========================================================= */
 
-      const col = document.createElement("div");
-      col.className = `col-md-4 ${project.categories.join(" ")}`;
+  const filtersContainer = document.querySelector('.gallery-filters');
+  const galleryContainer = document.querySelector('.gallery-container');
 
-      col.innerHTML = `
-        <div class="project-card" data-id="${project.id}">
-          <img src="${project.path + project.cover}" alt="${project.title}">
-          <div class="project-overlay">
-            <div>
-              <div class="project-title">${project.title}</div>
-              <div class="project-categories">${project.categories.join(", ")}</div>
+  if (!filtersContainer || !galleryContainer) return;
+
+  fetch('assets/img/photography/gallery.json')
+    .then(response => response.json())
+    .then(data => {
+      const categoriesSet = new Set();
+
+      data.projects.forEach(project => {
+        project.categories.forEach(cat => categoriesSet.add(cat));
+
+        const col = document.createElement('div');
+        col.className = `col-lg-4 col-md-6 project-item ${project.categories.join(' ')}`;
+
+        col.innerHTML = `
+          <div class="project-card" data-src="${project.path + project.cover}">
+            <img src="${project.path + project.cover}" alt="${project.title}">
+            <div class="project-overlay">
+              <div>
+                <div class="project-title">${project.title}</div>
+                <div class="project-categories">${project.categories.join(', ')}</div>
+              </div>
             </div>
           </div>
-        </div>
-      `;
+        `;
 
-      gridEl.appendChild(col);
-    });
-  }
-
-  /* ==========================
-     ISOTOPE
-  ========================== */
-  function initIsotope() {
-    imagesLoaded(gridEl, () => {
-      const iso = new Isotope(gridEl, {
-        itemSelector: ".col-md-4",
-        layoutMode: "fitRows"
+        galleryContainer.appendChild(col);
       });
 
-      filtersEl.addEventListener("click", e => {
-        if (!e.target.classList.contains("filter-btn")) return;
+      /* =========================================================
+         BUILD FILTER BUTTONS
+         ========================================================= */
+      filtersContainer.innerHTML =
+        `<button class="filter-btn active" data-filter="*">All</button>` +
+        [...categoriesSet].map(cat =>
+          `<button class="filter-btn" data-filter=".${cat}">${cat}</button>`
+        ).join('');
 
-        filtersEl.querySelectorAll(".filter-btn")
-          .forEach(b => b.classList.remove("active"));
+      /* =========================================================
+         INIT ISOTOPE (AFTER IMAGES LOAD)
+         ========================================================= */
+      imagesLoaded(galleryContainer, () => {
+        const iso = new Isotope(galleryContainer, {
+          itemSelector: '.project-item',
+          layoutMode: 'fitRows'
+        });
 
-        e.target.classList.add("active");
-        iso.arrange({ filter: e.target.dataset.filter });
+        filtersContainer.addEventListener('click', e => {
+          if (!e.target.classList.contains('filter-btn')) return;
+
+          filtersContainer.querySelectorAll('.filter-btn')
+            .forEach(btn => btn.classList.remove('active'));
+
+          e.target.classList.add('active');
+          iso.arrange({ filter: e.target.dataset.filter });
+        });
       });
+
+      /* =========================================================
+         INIT LIGHTGALLERY
+         ========================================================= */
+      lightGallery(galleryContainer, {
+        selector: '.project-card',
+        download: false,
+        counter: false
+      });
+    })
+    .catch(err => {
+      console.error('Gallery JSON load error:', err);
     });
-  }
-
-  /* ==========================
-     DYNAMIC LIGHTGALLERY
-  ========================== */
-  gridEl.addEventListener("click", e => {
-    const card = e.target.closest(".project-card");
-    if (!card) return;
-
-    const projectId = card.dataset.id;
-    const project = allProjects.find(p => p.id === projectId);
-    if (!project) return;
-
-    const images = project.images.map(img => ({
-      src: project.path + img,
-      thumb: project.path + img
-    }));
-
-    // Destroy previous instance cleanly
-    if (galleryInstance) {
-      galleryInstance.destroy(true);
-      galleryInstance = null;
-    }
-
-    galleryInstance = lightGallery(lightboxEl, {
-      dynamic: true,
-      dynamicEl: images,
-      plugins: [lgThumbnail, lgZoom],
-      thumbnail: true,
-      zoom: true,
-      download: false,
-      counter: true,
-      closable: true,
-      escKey: true
-    });
-
-    galleryInstance.openGallery(0);
-  });
-
 });

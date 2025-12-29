@@ -1,50 +1,82 @@
-.photography-gallery {
+/* =========================================================
+   PHOTOGRAPHY PAGE ONLY
+   ========================================================= */
+
+.photography-page .photography-gallery {
   padding-top: 0;
 }
 
-/* FILTERS */
-.gallery-filters {
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+.photography-page .gallery-filters {
   display: flex;
   justify-content: center;
   gap: 24px;
+  margin-bottom: 40px;
 }
 
-.filter-btn {
+.photography-page .filter-btn {
   background: none;
   border: none;
   font-size: 14px;
-  letter-spacing: .08em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--nav-color);
   cursor: pointer;
+  padding: 4px 0;
+  position: relative;
 }
 
-.filter-btn.active,
-.filter-btn:hover {
+.photography-page .filter-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--nav-active-color);
+  transition: width 0.3s ease;
+}
+
+.photography-page .filter-btn:hover::after,
+.photography-page .filter-btn.active::after {
+  width: 100%;
+}
+
+.photography-page .filter-btn.active,
+.photography-page .filter-btn:hover {
   color: var(--nav-active-color);
 }
 
-/* CARD */
-.project-card {
+/* =========================================================
+   GALLERY CARD
+   ========================================================= */
+
+.photography-page .project-card {
   position: relative;
   width: 100%;
   overflow: hidden;
   cursor: pointer;
 }
 
-.project-card img {
+.photography-page .project-card img {
   width: 100%;
   height: auto;
   display: block;
-  transition: transform .5s ease;
+  transition: transform 0.5s ease;
 }
 
-.project-card:hover img {
+.photography-page .project-card:hover img {
   transform: scale(1.05);
 }
 
-/* OVERLAY */
-.project-overlay {
+/* =========================================================
+   OVERLAY
+   ========================================================= */
+
+.photography-page .project-overlay {
   position: absolute;
   inset: 0;
   display: flex;
@@ -52,27 +84,36 @@
   padding: 24px;
   background: linear-gradient(
     to top,
-    rgba(0,0,0,.65),
-    rgba(0,0,0,0) 60%
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0) 60%
   );
   opacity: 0;
-  transition: opacity .4s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
-.project-card:hover .project-overlay {
+.photography-page .project-card:hover .project-overlay {
   opacity: 1;
 }
 
-.project-title {
-  color: #fff;
+.photography-page .project-title {
+  color: #ffffff;
   font-size: 18px;
   font-weight: 500;
+  margin-bottom: 4px;
 }
 
-.project-categories {
-  color: #ccc;
+.photography-page .project-categories {
+  color: #cccccc;
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* =========================================================
+   SAFETY: ENSURE DUMMY SCROLL-TOP NEVER SHOWS
+   ========================================================= */
+
+.photography-page .scroll-top {
+  display: none !important;
 }

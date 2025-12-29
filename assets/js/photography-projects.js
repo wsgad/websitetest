@@ -1,114 +1,152 @@
-document.addEventListener('DOMContentLoaded', () => {
-  if (!document.body.classList.contains('photography-page')) return;
-
-  /* =========================================================
-     SAFETY PATCH – satisfy main.js dependency
-     ========================================================= */
-  if (!document.querySelector('.scroll-top')) {
-    const dummy = document.createElement('a');
-    dummy.className = 'scroll-top';
-    dummy.style.display = 'none';
-    document.body.appendChild(dummy);
-  }
-
-  const filtersContainer = document.querySelector('.gallery-filters');
-  const galleryContainer = document.querySelector('.gallery-container');
+document.addEventListener("DOMContentLoaded", async () => {
+  const filtersContainer = document.querySelector(".gallery-filters");
+  const galleryContainer = document.querySelector(".gallery-container");
 
   if (!filtersContainer || !galleryContainer) return;
 
-  fetch('assets/img/photography/gallery.json')
-    .then(res => res.json())
-    .then(data => {
-      const categories = new Set();
+  /* -------------------------------------
+     HELPERS
+  ------------------------------------- */
+  const slugify = str =>
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-");
 
-      data.projects.forEach(project => {
-        project.categories.forEach(c => categories.add(c));
+  /* -------------------------------------
+     LOAD gallery.json
+  ------------------------------------- */
+  let data;
+  try {
+    const res = await fetch("assets/img/photography/gallery.json");
+    data = await res.json();
+  } catch (err) {
+    console.error("❌ Failed to load gallery.json", err);
+    return;
+  }
 
-        const col = document.createElement('div');
-        col.className = `col-lg-4 col-md-6 project-item ${project.categories.join(' ')}`;
+  const projects = data.projects || [];
+  if (!projects.length) return;
 
-        /* -------------------------------
-           Build hidden gallery anchors
-        -------------------------------- */
-        const galleryId = `gallery-${project.id}`;
+  /* -------------------------------------
+     BUILD FILTERS
+     - FIRST CATEGORY ONLY
+     - LABEL = original text (Food & Beverage)
+     - SLUG  = safe CSS class (food-beverage)
+  ------------------------------------- */
+  const filterMap = new Map(); // slug -> label
 
-        let anchors = '';
-        project.images.forEach(img => {
-          anchors += `
-            <a
-              href="${project.path + img}"
-              class="lg-item"
-              data-lg-size="1600-1067"
-              data-sub-html="<h4>${project.title}</h4>"
-            ></a>
-          `;
-        });
+  projects.forEach(project => {
+    if (project.categories && project.categories[0]) {
+      const label = project.categories[0]; // EXACT text from meta
+      const slug = slugify(label);
+      filterMap.set(slug, label);
+    }
+  });
 
-        col.innerHTML = `
-          <div class="project-card" data-gallery="${galleryId}">
-            <img src="${project.path + project.cover}" alt="${project.title}">
-            <div class="project-overlay">
-              <div>
-                <div class="project-title">${project.title}</div>
-                <div class="project-categories">${project.categories.join(', ')}</div>
-              </div>
+  filtersContainer.innerHTML = `
+    <button class="filter-btn active" data-filter="*">All</button>
+    ${[...filterMap.entries()]
+      .map(
+        ([slug, label]) =>
+          `<button class="filter-btn" data-filter=".${slug}">${label}</button>`
+      )
+      .join("")}
+  `;
+
+  /* -------------------------------------
+     RENDER PROJECTS
+  ------------------------------------- */
+  projects.forEach(project => {
+    const filterSlug = slugify(project.categories[0]);
+
+    const col = document.createElement("div");
+    col.className = `col-lg-4 col-md-6 gallery-item ${filterSlug}`;
+
+    col.innerHTML = `
+      <div class="project-card">
+        <img src="${project.path + project.cover}" alt="${project.title}">
+        <div class="project-overlay">
+          <div>
+            <div class="project-title">${project.title}</div>
+            <div class="project-categories">
+              ${(project.allCategories || project.categories).join(" / ")}
             </div>
           </div>
+        </div>
+      </div>
+    `;
 
-          <div id="${galleryId}" class="lg-hidden">
-            ${anchors}
-          </div>
-        `;
+    /* -------------------------------------
+       HIDDEN LIGHTGALLERY LINKS
+    ------------------------------------- */
+    const hiddenGallery = document.createElement("div");
+    hiddenGallery.className = "lg-hidden";
 
-        galleryContainer.appendChild(col);
+    project.images.forEach(img => {
+      hiddenGallery.innerHTML += `
+        <a href="${project.path + img}" class="project-link"></a>
+      `;
+    });
 
-        /* -------------------------------
-           Init LightGallery PER PROJECT
-        -------------------------------- */
-        const lgContainer = col.querySelector(`#${galleryId}`);
-        const lgInstance = lightGallery(lgContainer, {
-          selector: '.lg-item',
-          download: false,
-          controls: true,
-          closable: true,
-          loop: true,
-          counter: true
-        });
+    col.appendChild(hiddenGallery);
+    galleryContainer.appendChild(col);
 
-        /* -------------------------------
-           Open gallery on card click
-        -------------------------------- */
-        col.querySelector('.project-card')
-          .addEventListener('click', () => {
-            lgInstance.openGallery(0);
-          });
+    /* -------------------------------------
+       INIT LIGHTGALLERY (SAFE)
+    ------------------------------------- */
+    if (window.lightGallery) {
+      const plugins = [];
+      if (window.lgThumbnail) plugins.push(lgThumbnail);
+      if (window.lgZoom) plugins.push(lgZoom);
+
+      lightGallery(hiddenGallery, {
+        selector: ".project-link",
+        plugins,
+        thumbnail: true,
+        zoom: true,
+        counter: true,
+        download: false
       });
+    }
 
-      /* -------------------------------
-         Filters
-      -------------------------------- */
-      filtersContainer.innerHTML =
-        `<button class="filter-btn active" data-filter="*">All</button>` +
-        [...categories].map(c =>
-          `<button class="filter-btn" data-filter=".${c}">${c}</button>`
-        ).join('');
+    /* -------------------------------------
+       OPEN GALLERY ON CARD CLICK
+    ------------------------------------- */
+    col.querySelector(".project-card").addEventListener("click", () => {
+      const first = hiddenGallery.querySelector(".project-link");
+      if (first) first.click();
+    });
+  });
 
-      imagesLoaded(galleryContainer, () => {
-        const iso = new Isotope(galleryContainer, {
-          itemSelector: '.project-item',
-          layoutMode: 'fitRows'
-        });
+  /* -------------------------------------
+     INIT ISOTOPE (AFTER IMAGES LOAD)
+  ------------------------------------- */
+  const iso = new Isotope(galleryContainer, {
+    itemSelector: ".gallery-item",
+    layoutMode: "fitRows",
+    percentPosition: true
+  });
 
-        filtersContainer.addEventListener('click', e => {
-          if (!e.target.classList.contains('filter-btn')) return;
+  // 🔥 CRITICAL: wait for images before layout
+  imagesLoaded(galleryContainer, () => {
+    iso.layout();
+  });
 
-          filtersContainer.querySelectorAll('.filter-btn')
-            .forEach(b => b.classList.remove('active'));
+  /* -------------------------------------
+     FILTER HANDLING
+  ------------------------------------- */
+  filtersContainer.addEventListener("click", e => {
+    if (!e.target.classList.contains("filter-btn")) return;
 
-          e.target.classList.add('active');
-          iso.arrange({ filter: e.target.dataset.filter });
-        });
-      });
-    })
-    .catch(err => console.error('Gallery error:', err));
+    filtersContainer
+      .querySelectorAll(".filter-btn")
+      .forEach(btn => btn.classList.remove("active"));
+
+    e.target.classList.add("active");
+
+    iso.arrange({
+      filter: e.target.dataset.filter
+    });
+  });
 });

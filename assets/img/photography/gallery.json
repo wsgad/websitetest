@@ -35,7 +35,9 @@
         "Food & Beverage"
       ],
       "allCategories": [
-        "Food & Beverage"
+        "Food & Beverage",
+        "Restaurants",
+        "other"
       ],
       "path": "assets/img/photography/redbird/",
       "cover": "cover.jpg",

@@ -2,11 +2,10 @@
   "title": "Redbird",
   "categories": [
     "Food & Beverage",
-    "Restaurants",
-    "other"
+    "Lifestyle"
   ],
-  "location": "Cairo",
-  "date": "2024",
+  "location": "",
+  "date": "",
   "description": "",
   "cover": "cover.jpg",
   "order": null

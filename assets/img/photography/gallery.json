@@ -4,11 +4,11 @@
       "id": "portsaid",
       "title": "Portsaid",
       "categories": [
-        "Walks"
+        "Street Photography"
       ],
       "allCategories": [
-        "Walks",
-        "Street Photography"
+        "Street Photography",
+        "Walks"
       ],
       "path": "assets/img/photography/Portsaid/",
       "cover": "cover.jpg",
@@ -24,7 +24,46 @@
         "10.jpg"
       ],
       "location": "Egypt",
-      "date": "2025",
+      "date": "",
+      "description": "",
+      "order": null
+    },
+    {
+      "id": "schools",
+      "title": "Schools",
+      "categories": [
+        "Schools"
+      ],
+      "allCategories": [
+        "Schools",
+        "Architecture"
+      ],
+      "path": "assets/img/photography/Schools/",
+      "cover": "2cdf31130333485.62a0daf9dbb30.jpg",
+      "images": [
+        "32Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
+        "34d6d9145386549.629de42cc83dd.jpg",
+        "3d948f130333485.617dcb6a31119.jpg",
+        "5df0bc145386549.629de42c0bd36.jpg",
+        "6aa926145386549.629de42c0b114.jpg",
+        "6b43b9145386549.629de42c72ec1.jpg",
+        "8dce43145386549.629de42cc8ec2.jpg",
+        "9eb0c1145386549.629dee1c8851e.jpg",
+        "9fd754145386549.629de54e8c732.jpg",
+        "9fee7a130333485.617dcb6a302dc.jpg",
+        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751 copy.png",
+        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
+        "Firefly_Gemini Flash_remove cars & distractions 840675.png",
+        "b1f09e145386549.629de42c72577.jpg",
+        "b9462e130333485.617dcb6a309a2.jpg",
+        "c7c381145386549.629de42cc7af0.jpg",
+        "cc9bb6195006171.68e135e2e2197.jpg",
+        "cf8c6c130333485.617dcb6a2fd3d.jpg",
+        "db57e6145386549.629de42c0a8d7.jpg",
+        "dfbd2f130333485.62a35df43f999.jpg"
+      ],
+      "location": "",
+      "date": "",
       "description": "",
       "order": null
     },
@@ -36,8 +75,7 @@
       ],
       "allCategories": [
         "Food & Beverage",
-        "Restaurants",
-        "other"
+        "Lifestyle"
       ],
       "path": "assets/img/photography/redbird/",
       "cover": "cover.jpg",
@@ -47,8 +85,8 @@
         "03.jpg",
         "04.jpg"
       ],
-      "location": "Cairo",
-      "date": "2024",
+      "location": "",
+      "date": "",
       "description": "",
       "order": null
     }

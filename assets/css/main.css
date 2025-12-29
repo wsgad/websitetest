@@ -3344,3 +3344,30 @@ section,
     border-radius: 10px;
   }
 }
+/* =====================================================
+   ABSOLUTE NAVBAR TYPOGRAPHY LOCK (FINAL FIX)
+   ===================================================== */
+
+.header.barista-nav,
+.header.barista-nav * {
+  font-family: "Poppins", sans-serif !important;
+}
+
+.header.barista-nav .nav-link,
+.header.barista-nav .dropdown-toggle {
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Mobile */
+@media (max-width: 991px) {
+  .header.barista-nav .nav-link,
+  .header.barista-nav .dropdown-toggle {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}

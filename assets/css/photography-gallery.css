@@ -1,0 +1,167 @@
+/* =========================================================
+   PHOTOGRAPHY GALLERY
+   FULLY SCOPED — ZERO GLOBAL LEAK
+   ========================================================= */
+
+.photography-gallery {
+  position: relative;
+}
+
+/* ===============================
+   FILTERS
+   =============================== */
+
+.photography-gallery .gallery-filters {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.photography-gallery .filter-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--nav-color);
+  cursor: pointer;
+  padding: 4px 0;
+  position: relative;
+}
+
+.photography-gallery .filter-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--nav-active-color);
+  transition: width 0.3s ease;
+}
+
+.photography-gallery .filter-btn:hover::after,
+.photography-gallery .filter-btn.active::after {
+  width: 100%;
+}
+
+.photography-gallery .filter-btn.active,
+.photography-gallery .filter-btn:hover {
+  color: var(--nav-active-color);
+}
+
+/* ===============================
+   GRID ITEMS
+   =============================== */
+
+.photography-gallery .gallery-item {
+  padding: 12px;
+}
+
+/* ===============================
+   CARD
+   =============================== */
+
+.photography-gallery .project-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.photography-gallery .project-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.photography-gallery .project-card:hover img {
+  transform: scale(1.05);
+}
+
+/* ===============================
+   OVERLAY
+   =============================== */
+
+.photography-gallery .project-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0) 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.photography-gallery .project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.photography-gallery .project-title {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.photography-gallery .project-categories {
+  color: #cccccc;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+/* ===============================
+   MOBILE — ALWAYS VISIBLE
+   =============================== */
+
+@media (max-width: 768px) {
+  .photography-gallery .project-overlay {
+    opacity: 1 !important;
+  }
+}
+
+/* ===============================
+   LIGHTGALLERY — SAFE SCOPE
+   =============================== */
+
+.photography-gallery .lg-hidden {
+  display: none;
+}
+
+.photography-gallery .lg-toolbar,
+.photography-gallery .lg-actions,
+.photography-gallery .lg-prev,
+.photography-gallery .lg-next,
+.photography-gallery .lg-close {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.photography-gallery .lg-toolbar svg,
+.photography-gallery .lg-actions svg {
+  fill: #ffffff !important;
+}
+
+.photography-gallery .lg-toolbar {
+  background: rgba(0, 0, 0, 0.65) !important;
+}
+
+.photography-gallery .lg-prev,
+.photography-gallery .lg-next {
+  font-size: 32px;
+}
+
+@media (max-width: 768px) {
+  .photography-gallery .lg-prev,
+  .photography-gallery .lg-next {
+    font-size: 26px;
+  }
+}

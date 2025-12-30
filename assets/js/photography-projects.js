@@ -116,7 +116,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       thumbnail: true,
       zoom: false,
       counter: true,
-      download: false
+      download: false,
+      fullScreen: false,
     });
 
     card.querySelector(".project-cover").addEventListener("click", () => {

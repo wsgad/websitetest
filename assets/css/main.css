@@ -1205,14 +1205,25 @@ section,
 
 .hero .hero-image .floating-elements .floating-card {
   position: absolute;
-  background: var(--surface-color);
+
+  /* GLASS EFFECT — MATCH NAVBAR */
+  background: rgba(12, 14, 18, 0.45);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+
   padding: 15px 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px color-mix(in srgb, var(--default-color), transparent 90%);
+
   display: flex;
   align-items: center;
   gap: 10px;
+
   font-weight: 600;
+  color: #ffffff;
+
   animation: float 3s ease-in-out infinite;
 }
 

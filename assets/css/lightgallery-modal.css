@@ -1,0 +1,97 @@
+/* =========================================================
+   LIGHTGALLERY — CENTERED IMAGE + CAPTION (LG-SAFE)
+   ========================================================= */
+
+/* Dark glass backdrop */
+.lg-backdrop {
+  background: rgba(0, 0, 0, 0.88) !important;
+  backdrop-filter: blur(6px);
+}
+
+/* Image wrapper — centered */
+.lg-img-wrap {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  max-width: 90vw !important;
+  max-height: 78vh !important;
+  margin: auto !important;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 18px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Image */
+.lg-img-wrap img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 10px;
+}
+
+/* ===============================
+   TITLE — ATTACHED TO IMAGE
+   =============================== */
+.lg-item .lg-sub-html {
+  position: relative !important;
+  margin-top: 12px !important;
+
+  max-width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px 18px;
+
+  text-align: center;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Text */
+.lg-sub-html h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lg-sub-html p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ===============================
+   THUMBNAILS — UNTOUCHED
+   =============================== */
+.lg-thumb-outer {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+}
+
+/* ===============================
+   MOBILE
+   =============================== */
+@media (max-width: 768px) {
+  .lg-img-wrap {
+    max-height: 68vh !important;
+    padding: 14px;
+  }
+
+  .lg-item .lg-sub-html {
+    max-width: 90vw;
+  }
+}

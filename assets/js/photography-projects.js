@@ -27,9 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   projects.forEach(p => {
     const col = document.createElement("div");
     col.className = `col-lg-4 col-md-6 gallery-item ${slug(p.categories[0])}`;
-    col.style.opacity = "0";
 
-    /* ✅ CORRECT LG v2 ANCHORS */
     const galleryAnchors = p.images
       .map(
         img => `
@@ -45,12 +43,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       .join("");
 
     col.innerHTML = `
-      <div class="project-card">
+      <div class="project-card is-loading">
         <img
           src="${p.path + p.cover}"
           class="project-cover"
           alt="${p.title}"
           loading="lazy"
+          decoding="async"
         >
 
         <div class="lg-items">
@@ -77,11 +76,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     masonry: { columnWidth: ".gallery-item" }
   });
 
-  imagesLoaded(gridEl).on("progress", () => iso.layout());
-  imagesLoaded(gridEl).on("always", () => {
-    document.querySelectorAll(".gallery-item").forEach(i => (i.style.opacity = "1"));
-    iso.layout();
+  /* ✅ PER-IMAGE LOAD (SKELETON → BLUR → SHOW) */
+  gridEl.querySelectorAll(".project-cover").forEach(img => {
+    const card = img.closest(".project-card");
+
+    if (img.complete) {
+      card.classList.remove("is-loading");
+      card.classList.add("is-loaded");
+    } else {
+      img.addEventListener("load", () => {
+        card.classList.remove("is-loading");
+        card.classList.add("is-loaded");
+        iso.layout();
+      });
+    }
   });
+
+  imagesLoaded(gridEl).on("progress", () => iso.layout());
 
   /* FILTER CLICK */
   filtersEl.addEventListener("click", e => {
@@ -91,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     iso.arrange({ filter: e.target.dataset.filter });
   });
 
-  /* LIGHTGALLERY — v2 (THUMBNAILS WORKING) */
+  /* LIGHTGALLERY — v2 */
   document.querySelectorAll(".project-card").forEach(card => {
     const gallery = card.querySelector(".lg-items");
 

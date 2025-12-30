@@ -15,11 +15,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
   /* ===============================
-     BUILD FILTERS (FIRST CATEGORY ONLY)
+     BUILD FILTERS
      =============================== */
 
   const filterMap = new Map();
-
   projects.forEach(p => {
     if (p.categories?.length) {
       filterMap.set(slug(p.categories[0]), p.categories[0]);
@@ -29,43 +28,52 @@ document.addEventListener("DOMContentLoaded", async () => {
   filtersEl.innerHTML =
     `<button class="filter-btn active" data-filter="*">All</button>` +
     [...filterMap.entries()]
-      .map(
-        ([key, label]) =>
-          `<button class="filter-btn" data-filter=".${key}">${label}</button>`
-      )
+      .map(([k, v]) => `<button class="filter-btn" data-filter=".${k}">${v}</button>`)
       .join("");
 
   /* ===============================
-     BUILD GRID (STATIC ANCHORS — SAFE)
+     BUILD GRID — CORRECT LG v2 STRUCTURE
      =============================== */
 
   projects.forEach(p => {
     const cat = slug(p.categories[0]);
-
     const col = document.createElement("div");
     col.className = `col-lg-4 col-md-6 gallery-item ${cat}`;
 
-    // ✅ FIX: add data-lg-thumb for EVERY image
-    const anchors = p.images
-      .map((img, i) =>
-        i === 0
-          ? `<a 
-               href="${p.path + img}"
-               data-lg-thumb="${p.path + img}"
-             >
-               <img src="${p.path + p.cover}" alt="${p.title}">
-             </a>`
-          : `<a 
-               href="${p.path + img}"
-               data-lg-thumb="${p.path + img}"
-               class="d-none"
-             ></a>`
+    /* ✅ REAL LightGallery anchors (FIRST image = FIRST thumbnail) */
+    const galleryAnchors = p.images
+      .map(
+        img => `
+          <a href="${p.path + img}">
+            <img
+              src="${p.path + img}"
+              alt="${p.title}"
+              class="d-none"
+              loading="lazy"
+              decoding="async"
+            >
+          </a>
+        `
       )
       .join("");
 
+    /* ✅ COVER IMAGE (NOT part of LightGallery) */
+    const coverImage = `
+      <img
+        src="${p.path + p.cover}"
+        alt="${p.title}"
+        class="project-cover"
+        loading="lazy"
+        decoding="async"
+      >
+    `;
+
     col.innerHTML = `
       <div class="project-card">
-        ${anchors}
+        ${coverImage}
+        <div class="lg-items">
+          ${galleryAnchors}
+        </div>
         <div class="project-overlay">
           <div>
             <div class="project-title">${p.title}</div>
@@ -79,40 +87,45 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   /* ===============================
-     ISOTOPE
+     ISOTOPE — MASONRY
      =============================== */
 
   const iso = new Isotope(gridEl, {
     itemSelector: ".gallery-item",
-    layoutMode: "fitRows"
+    layoutMode: "masonry",
+    percentPosition: true,
+    masonry: { columnWidth: ".gallery-item" },
+    transitionDuration: "0.6s"
   });
 
   imagesLoaded(gridEl, () => iso.layout());
 
   filtersEl.addEventListener("click", e => {
     if (!e.target.classList.contains("filter-btn")) return;
-
-    filtersEl.querySelectorAll(".filter-btn").forEach(btn =>
-      btn.classList.remove("active")
-    );
-
+    filtersEl.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
     e.target.classList.add("active");
     iso.arrange({ filter: e.target.dataset.filter });
   });
 
   /* ===============================
-     LIGHTGALLERY — v2 CORRECT
-     EACH CARD = ITS OWN GALLERY
+     LIGHTGALLERY — v2 (FINAL)
      =============================== */
 
   document.querySelectorAll(".project-card").forEach(card => {
-    lightGallery(card, {
+    const gallery = card.querySelector(".lg-items");
+    lightGallery(gallery, {
       selector: "a",
-      plugins: [lgThumbnail, lgZoom], // ✅ REQUIRED
+      plugins: [lgThumbnail, lgZoom],
       thumbnail: true,
-      zoom: true,
+      zoom: false,
       counter: true,
       download: false
+    });
+
+    // Clicking cover opens gallery at first image
+    const cover = card.querySelector(".project-cover");
+    cover.addEventListener("click", () => {
+      gallery.querySelector("a")?.click();
     });
   });
 });

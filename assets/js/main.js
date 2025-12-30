@@ -1,4 +1,3 @@
-
 /**
  * GLOBAL JS — CLEANED & AUDITED
  * - Single gallery logic (LightGallery ONLY)
@@ -25,10 +24,14 @@ document.addEventListener("DOMContentLoaded", () => {
 (function () {
   "use strict";
 
+  /* ===============================
+     SCROLLED HEADER
+     =============================== */
   function toggleScrolled() {
     const body = document.body;
     const header = document.querySelector("#header");
     if (!header) return;
+
     if (
       !header.classList.contains("scroll-up-sticky") &&
       !header.classList.contains("sticky-top") &&
@@ -43,9 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("scroll", toggleScrolled);
   window.addEventListener("load", toggleScrolled);
 
-  function mobileNavToggle() {
-    document.body.classList.toggle("mobile-nav-active");
+  /* ===============================
+     MOBILE NAV
+     =============================== */
+  function mobileNavToggle(forceClose = false) {
+    const body = document.body;
     const btn = document.querySelector(".mobile-nav-toggle");
+    const collapse = document.querySelector(".navbar-collapse");
+
+    if (forceClose) {
+      body.classList.remove("mobile-nav-active");
+      if (collapse) collapse.classList.remove("show");
+    } else {
+      body.classList.toggle("mobile-nav-active");
+    }
+
     if (btn) {
       btn.classList.toggle("bi-list");
       btn.classList.toggle("bi-x");
@@ -58,21 +73,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.initNavMenu = function () {
     const toggleBtn = document.querySelector(".mobile-nav-toggle");
+    const header = document.querySelector("#header");
+
+    /* Hamburger toggle */
     if (toggleBtn && !toggleBtn.dataset.navInit) {
-      toggleBtn.addEventListener("click", mobileNavToggle);
+      toggleBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        mobileNavToggle();
+      });
       toggleBtn.dataset.navInit = "true";
     }
 
+    /* Close on link click */
     document.querySelectorAll("#navmenu a").forEach(link => {
       if (link.dataset.navInit) return;
       link.addEventListener("click", () => {
         if (document.body.classList.contains("mobile-nav-active")) {
-          mobileNavToggle();
+          mobileNavToggle(true);
         }
       });
       link.dataset.navInit = "true";
     });
 
+    /* Mobile dropdowns */
     document.querySelectorAll("#navmenu li.dropdown > a").forEach(anchor => {
       if (anchor.dataset.navInit) return;
       anchor.addEventListener("click", e => {
@@ -84,17 +107,49 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       anchor.dataset.navInit = "true";
     });
+
+    /* ============================================
+       ✅ OUTSIDE CLICK / TAP TO CLOSE (FIXED)
+       ============================================ */
+    if (!document.body.dataset.navOutsideInit) {
+  document.addEventListener("click", e => {
+    if (!isMobile()) return;
+
+    const isOpen =
+      document.body.classList.contains("mobile-nav-active") ||
+      document.querySelector(".navbar-collapse.show");
+
+    if (!isOpen) return;
+
+    const header =
+      document.querySelector("#header") ||
+      document.querySelector("#site-header") ||
+      document.querySelector(".navbar");
+
+    if (header && !header.contains(e.target)) {
+      mobileNavToggle(true);
+    }
+  });
+
+  document.body.dataset.navOutsideInit = "true";
+}
   };
 
   window.addEventListener("load", () => {
     if (typeof window.initNavMenu === "function") window.initNavMenu();
   });
 
+  /* ===============================
+     PRELOADER
+     =============================== */
   const preloader = document.querySelector("#preloader");
   if (preloader) {
     window.addEventListener("load", () => preloader.remove());
   }
 
+  /* ===============================
+     SCROLL TOP
+     =============================== */
   const scrollTop = document.querySelector(".scroll-top");
   if (scrollTop) {
     scrollTop.addEventListener("click", e => {
@@ -112,6 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("scroll", toggleScrollTop);
   }
 
+  /* ===============================
+     AOS
+     =============================== */
   window.addEventListener("load", () => {
     if (typeof AOS !== "undefined") {
       AOS.init({
@@ -123,11 +181,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  /* ===============================
+     TYPED
+     =============================== */
   const typedEl = document.querySelector(".typed");
   if (typedEl && typeof Typed !== "undefined") {
-    const strings = typedEl
-      .getAttribute("data-typed-items")
-      .split(",");
+    const strings = typedEl.getAttribute("data-typed-items").split(",");
     new Typed(".typed", {
       strings,
       loop: true,
@@ -137,10 +196,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* ===============================
+     COUNTERS
+     =============================== */
   if (typeof PureCounter !== "undefined") {
     new PureCounter();
   }
 
+  /* ===============================
+     SWIPER
+     =============================== */
   window.addEventListener("load", () => {
     if (typeof Swiper === "undefined") return;
     document.querySelectorAll(".init-swiper").forEach(el => {
@@ -151,6 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  /* ===============================
+     ISOTOPE
+     =============================== */
   if (typeof Isotope !== "undefined" && typeof imagesLoaded !== "undefined") {
     document.querySelectorAll(".isotope-layout").forEach(layout => {
       const container = layout.querySelector(".isotope-container");
@@ -176,5 +244,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ❌ GLightbox REMOVED
-
 })();

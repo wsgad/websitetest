@@ -142,3 +142,12 @@
     opacity: 1 !important;
   }
 }
+/* ===============================
+   MOBILE — FILTER SPACING FIX
+   =============================== */
+@media (max-width: 768px) {
+  .photography-gallery .gallery-filters {
+    gap: 12px 16px; /* row-gap column-gap */
+    margin-bottom: 24px;
+  }
+}

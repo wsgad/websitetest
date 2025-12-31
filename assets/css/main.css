@@ -3551,3 +3551,13 @@ section,
     transform: none !important;
   }
 }
+/* =========================================================
+   FIX: Hide Scroll-To-Top while LightGallery is open
+   ========================================================= */
+
+body.lg-overlay-open .scroll-top {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}

@@ -106,18 +106,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     iso.arrange({ filter: e.target.dataset.filter });
   });
 
-  /* LIGHTGALLERY — v2 (iOS FIXED) */
+  /* =========================================
+     LIGHTGALLERY — MOBILE NATIVE BEHAVIOR
+     ========================================= */
+
+  const isMobile = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
   document.querySelectorAll(".project-card").forEach(card => {
     const gallery = card.querySelector(".lg-items");
 
     const lgInstance = lightGallery(gallery, {
       selector: "a",
       plugins: [lgThumbnail, lgZoom],
+
       thumbnail: true,
       zoom: false,
       counter: true,
       download: false,
       fullScreen: false,
+
+      /* 🔒 MOBILE UX */
+      closable: !isMobile,        // ❌ tap to close disabled on mobile
+      escKey: !isMobile,          // ❌ ESC disabled on mobile
+      swipeToClose: true,         // ✅ swipe down closes
+      hideScrollbar: true         // ✅ stop page scrolling
     });
 
     card.querySelector(".project-cover").addEventListener("click", () => {

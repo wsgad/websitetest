@@ -1,48 +1,67 @@
 /* =========================================================
-   LIGHTGALLERY — CENTERED IMAGE + CAPTION (LG-SAFE)
+   LIGHTGALLERY — FULL GLASS OVERLAY (NO INNER BOX)
    ========================================================= */
 
-/* Dark glass backdrop */
+/* FULL overlay glass */
 .lg-backdrop {
-  background: rgba(0, 0, 0, 0.88) !important;
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.82) !important;
+  backdrop-filter: blur(18px) saturate(120%);
 }
 
-/* Image wrapper — centered */
+/* Center everything */
+.lg-outer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* IMAGE WRAPPER — NO BOX, NO BORDER */
 .lg-img-wrap {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 
-  max-width: 90vw !important;
+  max-width: 92vw !important;
   max-height: 78vh !important;
   margin: auto !important;
 
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(12px);
-  border-radius: 18px;
-  padding: 18px;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
 
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.55),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  /* Apple-style easing */
+  opacity: 0;
+  transform: scale(0.97) translateY(10px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Image */
+/* Active slide */
+.lg-item.lg-current .lg-img-wrap {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* IMAGE */
 .lg-img-wrap img {
   max-width: 100% !important;
   max-height: 100% !important;
   width: auto !important;
   height: auto !important;
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
 }
 
-/* ===============================
-   TITLE — ATTACHED TO IMAGE
-   =============================== */
+/* =========================================================
+   TITLE — FLOATING UNDER IMAGE
+   ========================================================= */
+
 .lg-item .lg-sub-html {
   position: relative !important;
-  margin-top: 12px !important;
+  margin-top: 14px !important;
 
   max-width: 70vw;
   margin-left: auto;
@@ -55,12 +74,18 @@
 
   text-align: center;
 
-  box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.3s ease 0.18s,
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) 0.18s;
 }
 
-/* Text */
+.lg-item.lg-current .lg-sub-html {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .lg-sub-html h4 {
   margin: 0;
   font-size: 14px;
@@ -73,22 +98,23 @@
   opacity: 0.85;
 }
 
-/* ===============================
+/* =========================================================
    THUMBNAILS — UNTOUCHED
-   =============================== */
+   ========================================================= */
+
 .lg-thumb-outer {
   background: rgba(0, 0, 0, 0.55) !important;
   backdrop-filter: blur(10px);
   border-radius: 14px;
 }
 
-/* ===============================
+/* =========================================================
    MOBILE
-   =============================== */
+   ========================================================= */
+
 @media (max-width: 768px) {
   .lg-img-wrap {
     max-height: 68vh !important;
-    padding: 14px;
   }
 
   .lg-item .lg-sub-html {

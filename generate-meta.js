@@ -12,15 +12,6 @@ const rl = readline.createInterface({
 const ask = (q) =>
   new Promise((resolve) => rl.question(q, (a) => resolve(a.trim())));
 
-const loadMeta = (metaPath) => {
-  if (!fs.existsSync(metaPath)) return {};
-  try {
-    return JSON.parse(fs.readFileSync(metaPath, "utf8"));
-  } catch {
-    return {};
-  }
-};
-
 (async () => {
   if (!fs.existsSync(ROOT)) {
     console.error("❌ Photography folder not found:", ROOT);
@@ -31,153 +22,105 @@ const loadMeta = (metaPath) => {
     .readdirSync(ROOT)
     .filter((f) => fs.statSync(path.join(ROOT, f)).isDirectory());
 
-  console.log("\n📁 Project folders:\n");
-  folders.forEach((f, i) => console.log(`${i + 1}) ${f}`));
+  if (!folders.length) {
+    console.log("⚠️ No project folders found.");
+    process.exit(0);
+  }
 
-  const input = await ask("\nWhich folders? (all / 1,3 / enter=cancel): ");
-  if (!input) return rl.close();
+  console.log("\n📁 Found project folders:\n");
+  folders.forEach((f, i) => {
+    console.log(`${i + 1}) ${f}`);
+  });
 
-  const selected =
-    input.toLowerCase() === "all"
-      ? folders
-      : input
-          .split(",")
-          .map((n) => folders[parseInt(n.trim(), 10) - 1])
-          .filter(Boolean);
-
-  for (const folder of selected) {
-    const folderPath = path.join(ROOT, folder);
-    const metaPath = path.join(folderPath, "_meta.json");
-    let meta = loadMeta(metaPath);
-
-    console.log(`\n📁 ${folder}`);
-
-    const mode = (await ask(`
-Update mode:
-• meta
-• ai
-• both
-• skip
-> `)).toLowerCase();
-
-    if (mode === "skip") continue;
-
-    /* =====================
-       META FIELD SELECTION
-    ===================== */
-    if (mode === "meta" || mode === "both") {
-      console.log(`
-Which meta fields do you want to update?
-• title
-• categories
-• location
-• date
-• description
-• order
-• cover
-• all
-• (enter = none)
+  console.log(`
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Type:
+• all        → update all folders
+• 1,3,5      → update selected folders
+• (enter)    → cancel
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `);
 
-      const fieldsInput = await ask("> ");
-      const fields =
-        fieldsInput === "all"
-          ? ["title","categories","location","date","description","order","cover"]
-          : fieldsInput
-              .split(",")
-              .map((f) => f.trim())
-              .filter(Boolean);
+  const input = await ask("Which folders do you want to update? ");
 
-      if (fields.includes("title")) {
-        meta.title =
-          (await ask(`Title (${meta.title || folder}): `)) ||
-          meta.title ||
-          folder;
-      }
+  if (!input) {
+    console.log("❌ Cancelled. No changes made.");
+    rl.close();
+    process.exit(0);
+  }
 
-      if (fields.includes("categories")) {
-        const c = await ask(
-          `Categories (${(meta.categories || []).join(", ")}): `
-        );
-        if (c) meta.categories = c.split(",").map((x) => x.trim());
-      }
+  let selectedFolders = [];
 
-      if (fields.includes("location")) {
-        meta.location =
-          (await ask(`Location (${meta.location || ""}): `)) ||
-          meta.location ||
-          "";
-      }
+  if (input.toLowerCase() === "all") {
+    selectedFolders = folders;
+  } else {
+    const indexes = input
+      .split(",")
+      .map((n) => parseInt(n.trim(), 10))
+      .filter((n) => !isNaN(n) && n >= 1 && n <= folders.length);
 
-      if (fields.includes("date")) {
-        meta.date =
-          (await ask(`Date (${meta.date || ""}): `)) ||
-          meta.date ||
-          "";
-      }
+    selectedFolders = indexes.map((i) => folders[i - 1]);
+  }
 
-      if (fields.includes("description")) {
-        meta.description =
-          (await ask(`Description (${meta.description || ""}): `)) ||
-          meta.description ||
-          "";
-      }
+  if (!selectedFolders.length) {
+    console.log("❌ No valid selection.");
+    rl.close();
+    process.exit(0);
+  }
 
-      if (fields.includes("order")) {
-        const o = await ask(`Order (${meta.order ?? ""}): `);
-        if (o) meta.order = Number(o);
-      }
+  console.log("\n✅ Updating:\n", selectedFolders.join(", "), "\n");
 
-      if (fields.includes("cover")) {
-        const imgs = fs
-          .readdirSync(folderPath)
-          .filter((f) => /\.(jpg|jpeg|png|webp)$/i.test(f));
-        console.log("\nAvailable images:\n");
-        imgs.forEach((f, i) => console.log(`${i + 1}) ${f}`));
-        const c = await ask("Cover image number: ");
-        const idx = parseInt(c, 10) - 1;
-        if (imgs[idx]) meta.cover = imgs[idx];
-      }
+  for (const folder of selectedFolders) {
+    const folderPath = path.join(ROOT, folder);
+    const metaPath = path.join(folderPath, "_meta.json");
+
+    console.log(`\n📁 ${folder}`);
+    console.log("👉 FIRST category = filter category\n");
+
+    const title = (await ask("Title (enter = folder name): ")) || folder;
+
+    const categoriesInput = await ask(
+      "Categories (comma separated, FIRST is filter): "
+    );
+
+    const categories = categoriesInput
+      .split(",")
+      .map((c) => c.trim())
+      .filter(Boolean);
+
+    if (!categories.length) {
+      console.log("⚠️ At least ONE category required. Skipping.");
+      continue;
     }
 
-    /* =====================
-       AI IMAGE LABELING
-    ===================== */
-    if (mode === "ai" || mode === "both") {
-      const imgs = fs
-        .readdirSync(folderPath)
-        .filter((f) => /\.(jpg|jpeg|png|webp)$/i.test(f));
+    const location = await ask("Location (optional): ");
+    const date = await ask("Date / Year (optional): ");
+    const description = await ask("Description (optional): ");
+    const orderInput = await ask("Order (number, optional): ");
 
-      console.log("\n🖼 Images:\n");
-      imgs.forEach((f, i) => console.log(`${i + 1}) ${f}`));
+    const images = fs
+      .readdirSync(folderPath)
+      .filter((f) => /\.(jpg|jpeg|png|webp)$/i.test(f));
 
-      const aiInput = await ask(`
-Which images are AI generated?
-• all
-• none
-• 1,3,5
-• (enter = none)
-> `);
+    const cover =
+      images.find((f) => f.toLowerCase().includes("cover")) ||
+      images[0] ||
+      "";
 
-      let aiIdx = [];
-
-      if (aiInput === "all") aiIdx = imgs.map((_, i) => i);
-      else if (aiInput && aiInput !== "none")
-        aiIdx = aiInput
-          .split(",")
-          .map((n) => parseInt(n.trim(), 10) - 1)
-          .filter((i) => i >= 0 && i < imgs.length);
-
-      meta.images = imgs.map((file, i) => ({
-        file,
-        ai: aiIdx.includes(i)
-      }));
-    }
+    const meta = {
+      title,
+      categories,
+      location,
+      date,
+      description,
+      cover,
+      order: orderInput ? Number(orderInput) : null
+    };
 
     fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2));
-    console.log("✅ _meta.json updated");
+    console.log("✅ _meta.json written");
   }
 
   rl.close();
-  console.log("\n🎉 Done.\n");
+  console.log("\n🎉 Done. Run generate-gallery.js when ready.\n");
 })();

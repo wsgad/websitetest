@@ -36,29 +36,18 @@ function buildGallery() {
 
     if (!Array.isArray(meta.categories) || !meta.categories.length) continue;
 
-    /* =====================================================
-       🔑 READ IMAGES FROM _meta.json (WITH AI FLAGS)
-    ===================================================== */
+    // 🔑 READ ALL IMAGES
+    const allImages = fs
+      .readdirSync(folderPath)
+      .filter((f) => /\.(jpg|jpeg|png|webp)$/i.test(f));
 
-    const metaImages = Array.isArray(meta.images) ? meta.images : [];
-
-    // Only keep images that actually exist
-    const validImages = metaImages.filter(img =>
-      img.file && fs.existsSync(path.join(folderPath, img.file))
-    );
-
-    if (!validImages.length) continue;
-
-    /* =====================================================
-       🔑 COVER FIRST
-    ===================================================== */
-
-    const orderedImages = meta.cover
+    // 🔑 COVER FIRST IN GALLERY
+    const images = meta.cover
       ? [
-          validImages.find(img => img.file === meta.cover),
-          ...validImages.filter(img => img.file !== meta.cover)
-        ].filter(Boolean)
-      : validImages;
+          meta.cover,
+          ...allImages.filter((img) => img !== meta.cover)
+        ]
+      : allImages;
 
     projects.push({
       id: folder.toLowerCase().replace(/\s+/g, "-"),
@@ -67,10 +56,7 @@ function buildGallery() {
       allCategories: meta.categories,
       path: `${ROOT}/${folder}/`,
       cover: meta.cover,
-      images: orderedImages.map(img => ({
-        file: img.file,
-        ai: img.ai === true
-      })),
+      images, // 👈 cover is images[0]
       location: meta.location || "",
       date: meta.date || "",
       description: meta.description || "",

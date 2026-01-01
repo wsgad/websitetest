@@ -17,7 +17,6 @@
 
 /* IMAGE WRAPPER — NO BOX */
 .lg-img-wrap {
-  position: relative; /* 🔑 required for watermarks */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -50,50 +49,6 @@
   height: auto !important;
   border-radius: 12px;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
-}
-
-/* =========================================================
-   GLOBAL WATERMARK — ALL IMAGES
-   ========================================================= */
-
-.lg-img-wrap::after {
-  content: "";
-  position: absolute;
-  bottom: 18px;
-  right: 18px;
-
-  width: 110px;
-  height: 28px;
-
-  background: url("/assets/img/watermarks/bywaleed.png") no-repeat center;
-  background-size: contain;
-
-  opacity: 0.75;
-  pointer-events: none;
-
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-}
-
-/* =========================================================
-   AI LABEL — ONLY WHEN data-ai="true"
-   ========================================================= */
-
-.lg-img-wrap[data-ai="true"]::before {
-  content: "";
-  position: absolute;
-  top: 16px;
-  left: 16px;
-
-  width: 46px;
-  height: 46px;
-
-  background: url("/assets/img/watermarks/waleedxai.png") no-repeat center;
-  background-size: contain;
-
-  opacity: 0.9;
-  pointer-events: none;
-
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
 
 /* =========================================================
@@ -258,19 +213,6 @@
 @media (max-width: 768px) {
   .lg-img-wrap {
     max-height: 68vh !important;
-  }
-
-  .lg-img-wrap::after {
-    width: 90px;
-    bottom: 12px;
-    right: 12px;
-  }
-
-  .lg-img-wrap[data-ai="true"]::before {
-    width: 36px;
-    height: 36px;
-    top: 12px;
-    left: 12px;
   }
 
   .lg-item .lg-sub-html {

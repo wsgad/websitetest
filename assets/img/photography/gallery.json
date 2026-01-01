@@ -25,7 +25,7 @@
         "10.jpg",
         "12.jpg"
       ],
-      "location": "",
+      "location": "Egypt",
       "date": "",
       "description": "",
       "order": null
@@ -38,7 +38,7 @@
       ],
       "allCategories": [
         "Schools",
-        "Portrait",
+        "Portraits",
         "Events"
       ],
       "path": "assets/img/photography/Schools/",
@@ -73,12 +73,13 @@
     },
     {
       "id": "beverage",
-      "title": "Beverages",
+      "title": "Summer Drinks",
       "categories": [
         "Food & Beverage"
       ],
       "allCategories": [
-        "Food & Beverage"
+        "Food & Beverage",
+        "Lifestyle"
       ],
       "path": "assets/img/photography/beverage/",
       "cover": "cover.jpg",
@@ -103,40 +104,14 @@
       "order": null
     },
     {
-      "id": "candles",
-      "title": "Enlighten Candles",
-      "categories": [
-        "Products"
-      ],
-      "allCategories": [
-        "Products",
-        "Lifestyle"
-      ],
-      "path": "assets/img/photography/candles/",
-      "cover": "226c2d234061747.68da176d2cc8b.png",
-      "images": [
-        "226c2d234061747.68da176d2cc8b.png",
-        "6e4b82234061747.68bcfb227ee93.jpg",
-        "88a8f3234061747.68bcfb227fc3b.jpg",
-        "c0d933234061747.68bcfb227e93c.jpg",
-        "c6705f234061747.68bcfb227d91e.jpg",
-        "cfdf2f234061747.68bcfb227f3d7.jpg",
-        "d2e4db234061747.68bcfb227e101.jpg"
-      ],
-      "location": "",
-      "date": "",
-      "description": "",
-      "order": null
-    },
-    {
       "id": "chef",
       "title": "Le Chef",
       "categories": [
-        "Portrait"
+        "Portraits"
       ],
       "allCategories": [
-        "Portrait",
-        "Studio Photography"
+        "Portraits",
+        "Studio"
       ],
       "path": "assets/img/photography/chef/",
       "cover": "cover.jpg",
@@ -156,13 +131,13 @@
     },
     {
       "id": "gang",
-      "title": "The Gang",
+      "title": "Gang",
       "categories": [
         "Portrait"
       ],
       "allCategories": [
         "Portrait",
-        "Lifestyle"
+        "lifestyle"
       ],
       "path": "assets/img/photography/gang/",
       "cover": "10e245145873775.68e80cfc03969.jpg",
@@ -177,14 +152,41 @@
       "order": null
     },
     {
+      "id": "interiors",
+      "title": "Interiors",
+      "categories": [
+        "Interiors"
+      ],
+      "allCategories": [
+        "Interiors",
+        "Real-estate"
+      ],
+      "path": "assets/img/photography/interiors/",
+      "cover": "4U6A9213-Edit.jpg",
+      "images": [
+        "4U6A9213-Edit.jpg",
+        "4U6A9220-Edit.jpg",
+        "4U6A9227-Edit.jpg",
+        "4U6A9263-Edit.jpg",
+        "4U6A9306-Edit.jpg",
+        "4U6A9335-Edit-2.jpg",
+        "4U6A9342-Edit-2.jpg",
+        "FV8A3592-Edit.jpg"
+      ],
+      "location": "",
+      "date": "",
+      "description": ""
+    },
+    {
       "id": "m-e",
       "title": "Creativity Hypothesis",
       "categories": [
-        "Portrait"
+        "Portraits"
       ],
       "allCategories": [
-        "Portrait",
-        "Studio Photography"
+        "Portraits",
+        "Personal Branding",
+        "Studio"
       ],
       "path": "assets/img/photography/m-e/",
       "cover": "cover.jpg",
@@ -201,7 +203,7 @@
     },
     {
       "id": "more-photos",
-      "title": "Maven International School",
+      "title": "Maven Intl",
       "categories": [
         "Schools"
       ],

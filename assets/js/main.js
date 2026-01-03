@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typeof window.initNavMenu === "function") {
           window.initNavMenu();
         }
+        // initialize theme toggle after header injection (if available)
+        if (typeof window.initThemeToggle === "function") {
+          window.initThemeToggle();
+        }
       })
       .catch(e => console.error("Global header load failed:", e));
   }
@@ -298,4 +302,74 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ❌ GLightbox REMOVED
+  /* ===============================
+     THEME TOGGLE (light / dark)
+     - toggles `light-background` / `dark-background` on <body>
+     - persists choice in localStorage
+     - respects `prefers-color-scheme` when no saved preference
+     =============================== */
+
+  const THEME_KEY = "siteTheme";
+
+  function applyThemeClass(theme) {
+    const body = document.body;
+    if (!body) return;
+    body.classList.remove("light-background", "dark-background");
+    if (theme === "light") body.classList.add("light-background");
+    else if (theme === "dark") body.classList.add("dark-background");
+  }
+
+  function getSavedTheme() {
+    try {
+      return localStorage.getItem(THEME_KEY);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function detectPreferredTheme() {
+    const saved = getSavedTheme();
+    if (saved) return saved;
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
+    return "dark";
+  }
+
+  window.initThemeToggle = function () {
+    const btn = document.getElementById("theme-toggle");
+    const icon = document.getElementById("theme-icon");
+
+    const current = detectPreferredTheme();
+    applyThemeClass(current);
+
+    function updateButton() {
+      const theme = getSavedTheme() || (document.body.classList.contains("light-background") ? "light" : "dark");
+      if (btn) btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+      if (icon) {
+        icon.classList.toggle("bi-sun", theme === "light");
+        icon.classList.toggle("bi-moon", theme !== "light");
+      }
+    }
+
+    if (!btn) return updateButton();
+
+    if (!btn.dataset.themeInit) {
+      btn.addEventListener("click", () => {
+        const now = (getSavedTheme() || (document.body.classList.contains("light-background") ? "light" : "dark")) === "light" ? "dark" : "light";
+        try {
+          localStorage.setItem(THEME_KEY, now);
+        } catch (e) {}
+        applyThemeClass(now);
+        updateButton();
+      });
+      btn.dataset.themeInit = "1";
+    }
+
+    updateButton();
+  };
+
+  // initialize on load in case header is present without injection timing
+  window.addEventListener("load", () => {
+    if (typeof window.initThemeToggle === "function") window.initThemeToggle();
+  });
+
 })();

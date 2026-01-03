@@ -46,6 +46,10 @@
   --accent-color: #6b7280;
   --surface-color: #f3f4f6;
   --contrast-color: #ffffff;
+  /* nav color overrides for light theme so components (filters, nav links) adapt */
+  --nav-color: #ffffff; /* nav text should be white in light mode per request */
+  --nav-active-color: var(--heading-color);
+  --nav-hover-color: var(--accent-color);
 }
 
 .dark-background {
@@ -54,11 +58,31 @@
   --heading-color: #ffffff;
   --surface-color: #252525;
   --contrast-color: #ffffff;
+  /* nav color overrides for dark theme */
+  --nav-color: #9CA3AF;
+  --nav-active-color: #ffffff;
+  --nav-hover-color: color-mix(in srgb, #ffffff 28%, #9CA3AF 72%);
 }
 
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
+}
+
+/* Theme transition helpers — smooth color swaps for header/nav/controls */
+:root,
+body,
+.header,
+.header .logo h1,
+.navmenu a,
+.navmenu a:focus,
+.photography-gallery .filter-btn,
+.footer .social-links a {
+  transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.header::before {
+  transition: background-color 260ms ease, box-shadow 260ms ease;
 }
 
 /*--------------------------------------------------------------

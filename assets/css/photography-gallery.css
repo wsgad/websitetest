@@ -16,35 +16,25 @@
 }
 
 .photography-gallery .filter-btn {
-  background: none;
-  border: none;
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  color: var(--nav-color);
+  /* use portfolio filter color system (accent-based pills) */
+  padding: 8px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 30px;
   cursor: pointer;
-  padding: 4px 0;
-  position: relative;
+  transition: all 0.3s ease;
+  background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+  color: var(--accent-color);
+  border: none;
 }
 
-.photography-gallery .filter-btn::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 2px;
-  background: var(--nav-active-color);
-  transition: width 0.3s ease;
-}
-
-.photography-gallery .filter-btn:hover::after,
-.photography-gallery .filter-btn.active::after {
-  width: 100%;
-}
-
-.photography-gallery .filter-btn.active,
 .photography-gallery .filter-btn:hover {
-  color: var(--nav-active-color);
+  background-color: color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.photography-gallery .filter-btn.active {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
 }
 
 /* GRID */

@@ -48,6 +48,10 @@
   --accent-color: #6b7280;
   --surface-color: #f3f4f6;
   --contrast-color: #ffffff;
+  /* nav color overrides for light theme so components (filters, nav links) adapt */
+  --nav-color: #ffffff; /* nav text should be white in light mode per request */
+  --nav-active-color: var(--heading-color);
+  --nav-hover-color: var(--accent-color);
 }
 
 .dark-background {
@@ -56,11 +60,31 @@
   --heading-color: #ffffff;
   --surface-color: #252525;
   --contrast-color: #ffffff;
+  /* nav color overrides for dark theme */
+  --nav-color: #9CA3AF;
+  --nav-active-color: #ffffff;
+  --nav-hover-color: color-mix(in srgb, #ffffff 28%, #9CA3AF 72%);
 }
 
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
+}
+
+/* Theme transition helpers — smooth color swaps for header/nav/controls */
+:root,
+body,
+.header,
+.header .logo h1,
+.navmenu a,
+.navmenu a:focus,
+.photography-gallery .filter-btn,
+.footer .social-links a {
+  transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.header::before {
+  transition: background-color 260ms ease, box-shadow 260ms ease;
 }
 
 /*--------------------------------------------------------------
@@ -2878,37 +2902,27 @@ section,
    FILTERS
    ========================================================= */
 
-.photography-gallery .gallery-filters {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 40px;
-}
-
 .photography-gallery .filter-btn {
-  background: none;
-  border: none;
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  
-  color: var(--nav-color);
+  /* use portfolio filter color system (accent-based pills) */
+  padding: 8px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 30px;
   cursor: pointer;
-  padding: 4px 0;
-  position: relative;
+  transition: all 0.3s ease;
+  background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+  color: var(--accent-color);
+  border: none;
 }
 
-.photography-gallery .filter-btn::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 2px;
-  background: var(--nav-active-color);
-  transition: width 0.3s ease;
+.photography-gallery .filter-btn:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
-.photography-gallery .filter-btn:hover::after,
+.photography-gallery .filter-btn.active {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+}
 .photography-gallery .filter-btn.active::after {
   width: 100%;
 }

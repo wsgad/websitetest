@@ -1,71 +1,17 @@
 {
   "projects": [
     {
-      "id": "portsaid",
-      "title": "Portsaid",
+      "id": "architecture",
+      "title": "Architecture",
       "categories": [
-        "Street Photography"
+        "Architecture"
       ],
       "allCategories": [
-        "Street Photography",
-        "Walks"
+        "Architecture"
       ],
-      "path": "assets/img/photography/Portsaid/",
-      "cover": "cover.jpg",
-      "images": [
-        "cover.jpg",
-        "01.jpg",
-        "02.jpg",
-        "03.jpg",
-        "04.jpg",
-        "05.jpg",
-        "06.jpg",
-        "08.jpg",
-        "09.jpg",
-        "10.jpg",
-        "12.jpg"
-      ],
-      "location": "Egypt",
-      "date": "",
-      "description": "",
-      "order": null
-    },
-    {
-      "id": "schools",
-      "title": "Smart City",
-      "categories": [
-        "Schools"
-      ],
-      "allCategories": [
-        "Schools",
-        "Portraits",
-        "Events"
-      ],
-      "path": "assets/img/photography/Schools/",
-      "cover": "2cdf31130333485.62a0daf9dbb30.jpg",
-      "images": [
-        "2cdf31130333485.62a0daf9dbb30.jpg",
-        "32Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
-        "34d6d9145386549.629de42cc83dd.jpg",
-        "3d948f130333485.617dcb6a31119.jpg",
-        "5df0bc145386549.629de42c0bd36.jpg",
-        "6aa926145386549.629de42c0b114.jpg",
-        "6b43b9145386549.629de42c72ec1.jpg",
-        "8dce43145386549.629de42cc8ec2.jpg",
-        "9eb0c1145386549.629dee1c8851e.jpg",
-        "9fd754145386549.629de54e8c732.jpg",
-        "9fee7a130333485.617dcb6a302dc.jpg",
-        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751 copy.png",
-        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
-        "Firefly_Gemini Flash_remove cars & distractions 840675.png",
-        "b1f09e145386549.629de42c72577.jpg",
-        "b9462e130333485.617dcb6a309a2.jpg",
-        "c7c381145386549.629de42cc7af0.jpg",
-        "cc9bb6195006171.68e135e2e2197.jpg",
-        "cf8c6c130333485.617dcb6a2fd3d.jpg",
-        "db57e6145386549.629de42c0a8d7.jpg",
-        "dfbd2f130333485.62a35df43f999.jpg"
-      ],
+      "path": "assets/img/photography/architecture/",
+      "cover": "",
+      "images": [],
       "location": "",
       "date": "",
       "description": "",
@@ -97,6 +43,29 @@
         "a645d7129442933.68e1c1417da38.jpg",
         "b12258129442933.68e1c14626102.jpg",
         "db620a129442933.68e1c1426e197.jpg"
+      ],
+      "location": "",
+      "date": "",
+      "description": "",
+      "order": null
+    },
+    {
+      "id": "cellist",
+      "title": "Cellist",
+      "categories": [
+        "Portrait"
+      ],
+      "allCategories": [
+        "Portrait"
+      ],
+      "path": "assets/img/photography/cellist/",
+      "cover": "60c5d9149524467.62e92d3cd88c9.jpg",
+      "images": [
+        "60c5d9149524467.62e92d3cd88c9.jpg",
+        "867df9149524467.62e92d3c5cf17.jpg",
+        "868642149524467.62e92d3cd8e3c.jpg",
+        "b09911149524467.62e92d3c5e1ca.jpg",
+        "f6d1b2149524467.62e92d3c5d898.jpg"
       ],
       "location": "",
       "date": "",
@@ -145,6 +114,31 @@
         "10e245145873775.68e80cfc03969.jpg",
         "6d8a13145873775.62a6976fafbfa.jpg",
         "f6314e145873775.68e80cfc03183.jpg"
+      ],
+      "location": "",
+      "date": "",
+      "description": "",
+      "order": null
+    },
+    {
+      "id": "grad-photos",
+      "title": "Graduation Photos",
+      "categories": [
+        "Schools"
+      ],
+      "allCategories": [
+        "Schools",
+        "Portrait",
+        "Studio"
+      ],
+      "path": "assets/img/photography/grad photos/",
+      "cover": "175f4b130333485.617dcb6a90e74.jpg",
+      "images": [
+        "175f4b130333485.617dcb6a90e74.jpg",
+        "4f5ee6130333485.617dcb6a928d7.jpg",
+        "a7341a130333485.617dcb6a91685.jpg",
+        "a9f915130333485.617dcb6a92f16.jpg",
+        "bcc25f130333485.617dcb6a92441.jpg"
       ],
       "location": "",
       "date": "",
@@ -202,22 +196,40 @@
       "order": null
     },
     {
-      "id": "more-photos",
-      "title": "Maven Intl",
+      "id": "maven",
+      "title": "Smart City",
       "categories": [
         "Schools"
       ],
       "allCategories": [
         "Schools",
-        "Portraits"
+        "Portraits",
+        "Events"
       ],
-      "path": "assets/img/photography/more photos/",
-      "cover": "34FlagMockup003 copy 2.jpg",
+      "path": "assets/img/photography/maven/",
+      "cover": "2cdf31130333485.62a0daf9dbb30.jpg",
       "images": [
-        "34FlagMockup003 copy 2.jpg",
-        "FlagMockup003 copy 2.jpg",
-        "Free_Pen_Mockup_3 copy 2.jpg",
-        "OQ3A4J1 copy 3.jpg"
+        "2cdf31130333485.62a0daf9dbb30.jpg",
+        "32Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
+        "34d6d9145386549.629de42cc83dd.jpg",
+        "3d948f130333485.617dcb6a31119.jpg",
+        "5df0bc145386549.629de42c0bd36.jpg",
+        "6aa926145386549.629de42c0b114.jpg",
+        "6b43b9145386549.629de42c72ec1.jpg",
+        "8dce43145386549.629de42cc8ec2.jpg",
+        "9eb0c1145386549.629dee1c8851e.jpg",
+        "9fd754145386549.629de54e8c732.jpg",
+        "9fee7a130333485.617dcb6a302dc.jpg",
+        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751 copy.png",
+        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
+        "Firefly_Gemini Flash_remove cars & distractions 840675.png",
+        "b1f09e145386549.629de42c72577.jpg",
+        "b9462e130333485.617dcb6a309a2.jpg",
+        "c7c381145386549.629de42cc7af0.jpg",
+        "cc9bb6195006171.68e135e2e2197.jpg",
+        "cf8c6c130333485.617dcb6a2fd3d.jpg",
+        "db57e6145386549.629de42c0a8d7.jpg",
+        "dfbd2f130333485.62a35df43f999.jpg"
       ],
       "location": "",
       "date": "",
@@ -225,23 +237,69 @@
       "order": null
     },
     {
-      "id": "redbird",
-      "title": "Redbird",
+      "id": "portsaid",
+      "title": "Portsaid",
       "categories": [
-        "Food & Beverage"
+        "Street Photography"
       ],
       "allCategories": [
-        "Food & Beverage",
-        "Lifestyle"
+        "Street Photography",
+        "Walks"
       ],
-      "path": "assets/img/photography/redbird/",
+      "path": "assets/img/photography/portsaid/",
       "cover": "cover.jpg",
       "images": [
         "cover.jpg",
         "01.jpg",
         "02.jpg",
         "03.jpg",
-        "04.jpg"
+        "04.jpg",
+        "05.jpg",
+        "06.jpg",
+        "08.jpg",
+        "09.jpg",
+        "10.jpg",
+        "12.jpg"
+      ],
+      "location": "Egypt",
+      "date": "",
+      "description": "",
+      "order": null
+    },
+    {
+      "id": "schools-facilities",
+      "title": "Schools Facilities",
+      "categories": [
+        "Architecture"
+      ],
+      "allCategories": [
+        "Architecture",
+        "Schools"
+      ],
+      "path": "assets/img/photography/schools facilities/",
+      "cover": "2cdf31130333485.62a0daf9dbb30.jpg",
+      "images": [
+        "2cdf31130333485.62a0daf9dbb30.jpg",
+        "32Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
+        "34d6d9145386549.629de42cc83dd.jpg",
+        "3d948f130333485.617dcb6a31119.jpg",
+        "5df0bc145386549.629de42c0bd36.jpg",
+        "6aa926145386549.629de42c0b114.jpg",
+        "6b43b9145386549.629de42c72ec1.jpg",
+        "8dce43145386549.629de42cc8ec2.jpg",
+        "9eb0c1145386549.629dee1c8851e.jpg",
+        "9fd754145386549.629de54e8c732.jpg",
+        "9fee7a130333485.617dcb6a302dc.jpg",
+        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751 copy.png",
+        "Firefly_Flux_Enhance this architectural photo of a modern international school to look clean, real 518751.png",
+        "Firefly_Gemini Flash_remove cars & distractions 840675.png",
+        "b1f09e145386549.629de42c72577.jpg",
+        "b9462e130333485.617dcb6a309a2.jpg",
+        "c7c381145386549.629de42cc7af0.jpg",
+        "cc9bb6195006171.68e135e2e2197.jpg",
+        "cf8c6c130333485.617dcb6a2fd3d.jpg",
+        "db57e6145386549.629de42c0a8d7.jpg",
+        "dfbd2f130333485.62a35df43f999.jpg"
       ],
       "location": "",
       "date": "",
